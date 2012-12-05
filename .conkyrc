@@ -1,0 +1,80 @@
+## Lewis's .conkyrc, with labels
+
+
+	# You probably shouldn't change these.
+use_xft yes
+own_window_type normal
+if_up_strictness address
+own_window yes
+own_window_type normal
+own_window_hints undecorated below sticky skip_taskbar skip_pager
+own_window_argb_visual yes
+double_buffer yes
+
+	# Position and size options
+	#  If you add or remove stuff, it's good to set minimum_size
+	#  to reflect that.  (Just experiment to see what's right)
+alignment top_right
+default_bar_size 136 4
+default_graph_size 136 20
+gap_x 12
+gap_y 20
+minimum_size 136 250
+
+	# Appearance for dark backgrounds
+default_color ffffff
+draw_graph_borders yes
+draw_shades yes
+	# For completely transparent window
+#own_window_transparent yes
+	# For semi-transparent window (255 = solid)
+own_window_argb_value 120
+
+	# Appearance for light backgrounds
+#default_color 000000
+#draw_graph_borders yes
+#draw_shades no
+#own_window_transparent yes
+
+	# Default font
+xftfont sans:size=8
+
+	# Use K, M, G etc. instead of KiB, MiB, GiB etc. for data sizes
+short_units yes
+
+	# Refresh rate in seconds (default is 3 but I like 1)
+	#  Doesn't have to be a whole number.
+update_interval 1
+
+
+
+
+# The fiddling with font sizes is to control line height.
+# 
+
+TEXT
+# header text is near useless but it makes the monitor look much nicer.
+$alignc$nodename  -  $sysname
+$alignc$kernel
+$alignc${time %m-%d  %H:%M:%S}${font sans:size=4}
+$hr${font sans:size=6}
+${font}CPU:$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font sans:size=4}
+${font sans:size=2}${cpugraph cpu1}
+${cpugraph cpu3}
+${cpugraph cpu4}
+${cpugraph cpu2}${font sans:size=6}
+${font}MEM:$alignr$mem${font sans:size=6}
+$membar$font
+FS:$alignr$fs_used${font sans:size=6}
+$fs_bar${font sans:size=4}
+${font}R $diskio_read$alignr$diskio_write W${font sans:size=4}
+# The spacing between these graphs may have to be adjusted if you change fonts
+${diskiograph_read 20,65 20000}  ${diskiograph_write 20,65 20000}${font sans:size=4}
+$battery_bar${font sans:size=6}
+${wireless_essid wlan0}$font
+IP:$alignr${addr wlan0}${font sans:size=7}
+${wireless_link_bar wlan0}${font sans:size=4}
+${font}v ${downspeed wlan0}$alignr${upspeed wlan0} ^
+${downspeedgraph wlan0 20,65 1000 -l}  ${upspeedgraph wlan0 20,65 1000 -l}
+# I wanted to have graphs for download/upload speed but for some reason
+# they wouldn't work.
