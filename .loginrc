@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ # Configure touchpad
+synclient TapButton2=2 TapButton3=3 FastTaps=1 VertScrollDelta=-101 HorizScrollDelta=-101

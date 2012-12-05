@@ -6,4 +6,5 @@
 !.mplayer
 .mplayer/*
 !.mplayer/config
+!.loginrc
 
