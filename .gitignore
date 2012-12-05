@@ -3,5 +3,7 @@
 !README
 !.conkyrc
 !.vimrc
-
+!.mplayer
+.mplayer/*
+!.mplayer/config
 
