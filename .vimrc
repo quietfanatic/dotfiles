@@ -9,6 +9,7 @@ set lbr
 set si
 set nu
 set et
+set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 "set mouse=a
 
 
