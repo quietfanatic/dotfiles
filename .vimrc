@@ -11,7 +11,8 @@ set nu
 set et
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 "set mouse=a
-
+set foldlevelstart=99
+set foldminlines=3
 
 " Most of these were copied from various places on the internet.  I forgot where.
 
@@ -26,8 +27,13 @@ let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
 
 " Add highlighting for function definition in C++
-autocmd Syntax cpp set syntax=mycpp  " mycpp is not included in the repo
-autocmd Syntax c set syntax=mycpp
+function! Domycpp()
+    set syntax=mycpp  " mycpp is not included in the repo
+    set foldmethod=syntax
+endfunction
+autocmd Syntax cpp call Domycpp()
+autocmd Syntax c call Domycpp()
+autocmd Syntax h call Domycpp()
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
