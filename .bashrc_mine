@@ -1,5 +1,16 @@
 
 export EDITOR=vim
+
 alias ja=LC_ALL=ja_JP.UTF-8
 
+alias ..='cd ..'
+
+function cg {
+    cd ~/stash/git/$1
+}
+
+function bashrc {
+    vim ~/.bashrc_mine
+    source ~/.bashrc_mine
+}
 
