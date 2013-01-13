@@ -27,13 +27,9 @@ let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
 
 " Add highlighting for function definition in C++
-function! Domycpp()
-    set syntax=mycpp  " mycpp is not included in the repo
-    set foldmethod=syntax
-endfunction
-autocmd Syntax cpp call Domycpp()
-autocmd Syntax c call Domycpp()
-autocmd Syntax h call Domycpp()
+autocmd Syntax cpp set syntax=mycpp
+autocmd Syntax c set syntax=mycpp
+autocmd Syntax h set syntax=mycpp
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
