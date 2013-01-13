@@ -18,15 +18,15 @@ hi Special     ctermfg=darkRed
 hi Statement   ctermfg=DarkYellow
 hi Type        ctermfg=darkcyan
 hi Error       ctermbg=Red ctermfg=White
-hi Todo        ctermbg=DarkYellow ctermfg=Black guifg=Blue guibg=Yellow
+hi Todo        ctermbg=DarkYellow ctermfg=Black
 
 hi cErrInParen ctermbg=None ctermfg=None
 
 hi MatchParen ctermbg=DarkBlue
 
 hi LineNr       ctermfg=Grey
-hi StatusLine   ctermbg=Black ctermfg=Grey
-hi StatusLineNC ctermbg=Black ctermfg=Grey
+hi StatusLine   cterm=none ctermbg=Black ctermfg=Grey
+hi StatusLineNC cterm=none ctermbg=Black ctermfg=Grey
 hi VertSplit    ctermbg=Black ctermfg=Grey
 
 hi Directory  ctermfg=LightCyan
