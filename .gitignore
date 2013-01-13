@@ -9,3 +9,8 @@
 !.loginrc
 !.Xmodmap
 !.bashrc_mine
+!.vim
+.vim/*
+!.vim/colors
+.vim/colors/*
+!.vim/colors/murphyme.vim
