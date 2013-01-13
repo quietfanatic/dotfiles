@@ -27,9 +27,9 @@ let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
 
 " Add highlighting for function definition in C++
-autocmd Syntax cpp set syntax=mycpp
-autocmd Syntax c set syntax=mycpp
-autocmd Syntax h set syntax=mycpp
+autocmd BufEnter *.cpp set syntax=mycpp
+autocmd BufEnter *.c set syntax=mycpp
+autocmd BufEnter *.h set syntax=mycpp
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
