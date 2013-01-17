@@ -35,7 +35,7 @@ syn keyword mycppAllocFunction malloc realloc calloc free
 syn keyword mycppLabel case default
 syn match mycppUserLabel "\%(\<case\s*\)\@<!\<\h\w*\ze:\_s"
 
-syn keyword mycppMiscReserved contained asm auto char class const constexpr decltype default delete double enum explicit extern float friend inline int long override private protected public register short signed sizeof static struct template this typedef typeof union unsigned virtual void volatile
+syn keyword mycppMiscReserved contained asm auto bool char class const constexpr const_cast decltype default delete double dynamic_cast enum explicit extern float friend inline int long mutable override private protected public register reinterpret_cast short signed sizeof static static_cast struct template this typedef typeid typename typeof union unsigned using virtual void volatile wchar_t
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn region cString start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cFormat,@Spell
