@@ -14,3 +14,6 @@
 !.vim/colors
 .vim/colors/*
 !.vim/colors/murphyme.vim
+!.vim/syntax
+.vim/syntax/*
+!.vim/syntax/mycpp.vim
