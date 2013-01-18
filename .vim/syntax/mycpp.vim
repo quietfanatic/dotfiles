@@ -23,7 +23,7 @@ syn match mycppBindingCFOperator "\<CF(\s*operator\>\s*\zs\S\S*\ze"
 
 syn keyword mycppConstant null nullptr
 syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>"
-syn match mycppControlOperator "\s\@<=\%([?:]\|&&\|||\)\s\@="
+syn match mycppControlOperator "\s\@<=\%(?\|&&\|||\)\s\@="
 syn keyword mycppControlOp and or
 syn keyword mycppOperator bitor xor compl bitand and_eq or_eq xor_eq not not_eq
 syn keyword mycppStatement goto break return continue
