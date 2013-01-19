@@ -7,7 +7,7 @@ syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(-\)\@<!>\|::\|\.\.\.\)[*&]*\s\s*\%(
 syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
-syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*[{:;]"
+syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\)"
 syn region mycppEnum1 start="\zs\<enum\>[^{;]*{" end=";" transparent contains=mycppBindingType,mycppEnum2
 syn region mycppEnum2 start="{" end="}" transparent contained contains=mycppBindingEnum
 syn match mycppBindingEnum contained "\%([{,][\n 	]*\)\@<=\zs\h\w*\ze\_s*[=,}]"
@@ -26,7 +26,7 @@ syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>"
 syn match mycppControlOperator "\s\@<=\%(?\|&&\|||\)\s\@="
 syn keyword mycppControlOp and or
 syn keyword mycppOperator bitor xor compl bitand and_eq or_eq xor_eq not not_eq
-syn keyword mycppStatement goto break return continue
+syn keyword mycppStatement goto break return continue asm
 syn keyword mycppException throw try catch
 syn keyword mycppConditional if else switch
 syn keyword mycppRepeat while for do
@@ -35,7 +35,8 @@ syn keyword mycppAllocFunction malloc realloc calloc free
 syn keyword mycppLabel case default
 syn match mycppUserLabel "\%(\<case\s*\)\@<!\<\h\w*\ze:\_s"
 
-syn keyword mycppMiscReserved contained asm auto bool char class const constexpr const_cast decltype default delete double dynamic_cast enum explicit extern float friend inline int long mutable override private protected public register reinterpret_cast short signed sizeof static static_cast struct template this typedef typeid typename typeof union unsigned using virtual void volatile wchar_t
+syn keyword mycppStorageEtc constexpr explicit extern friend inline mutable override private protected public register static template typedef virtual volatile
+syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn region cString start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cFormat,@Spell
@@ -121,6 +122,7 @@ hi def link mycppControlOperator Statement
 hi def link mycppControlOp Statement
 hi def link mycppAlloc Keyword
 hi def link mycppAllocFunction Keyword
+hi def link mycppStorageEtc StorageClass
 hi def link Binding Identifier
 
 hi def link cFormat		cSpecial
