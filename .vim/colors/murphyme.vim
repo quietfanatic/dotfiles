@@ -10,13 +10,14 @@ let g:colors_name = "murphyme"
 
 "hi Normal     ctermfg=none       guifg=none
 hi Comment     ctermfg=LightRed
-hi Constant    ctermfg=darkgreen
+hi Constant    ctermfg=lightgreen
 hi Identifier  ctermfg=lightcyan
 hi Ignore      ctermfg=black
-hi PreProc     ctermfg=lightBlue
-hi Special     ctermfg=darkRed
-hi Statement   ctermfg=DarkYellow
+hi PreProc     ctermfg=LightBlue
+hi Special     ctermfg=LightRed
+hi Statement   ctermfg=Yellow
 hi Type        ctermfg=darkcyan
+hi StorageClass ctermfg=lightgrey
 hi Error       ctermbg=Red ctermfg=White
 hi Todo        ctermbg=DarkYellow ctermfg=Black
 
@@ -27,7 +28,7 @@ hi MatchParen ctermbg=DarkBlue
 hi LineNr       ctermfg=Grey
 hi StatusLine   cterm=none ctermbg=Black ctermfg=Grey
 hi StatusLineNC cterm=none ctermbg=Black ctermfg=Grey
-hi VertSplit    ctermbg=Black ctermfg=Grey
+hi VertSplit    cterm=none ctermbg=Black ctermfg=Grey
 
 hi Directory  ctermfg=LightCyan
 hi ErrorMsg   ctermbg=DarkRed ctermfg=White
