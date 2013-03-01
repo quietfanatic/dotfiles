@@ -3,12 +3,12 @@
 " All things with names starting with mycpp are public domain
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
-syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \)\@<!\%(-\)\@<!>\|::\|\.\.\.\)[*&]*\s\s*\%(\h\w*::\)*\zs\h\w*\%(operator\)\@<!\ze\s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved
-syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
+syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\)[*&]*\s\s*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved
+"syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
 syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\)"
-syn region mycppEnum1 start="\zs\<enum\>[^{;]*{" end=";" transparent contains=mycppBindingType,mycppEnum2
+syn region mycppEnum1 start="\zs\<enum\>[^{;]*{" end=";" transparent contains=mycppBindingType,mycppBinding,mycppEnum2
 syn region mycppEnum2 start="{" end="}" transparent contained contains=mycppBindingEnum
 syn match mycppBindingEnum contained "\%([{,][\n 	]*\)\@<=\zs\h\w*\ze\_s*[=,}]"
 syn match mycppBindingCF "\<CF(\s*\zs\h\w*\%(::\h\w*\)*\%(operator\)\@<!\s"
@@ -33,7 +33,7 @@ syn keyword mycppRepeat while for do
 syn keyword mycppAlloc new delete
 syn keyword mycppAllocFunction malloc realloc calloc free
 syn keyword mycppLabel case default
-syn match mycppUserLabel "\%(\<case\s*\)\@<!\<\h\w*\ze:\_s"
+syn match mycppUserLabel "[;{]\_s*\zs\h\w*\ze:\_s"
 
 syn keyword mycppStorageEtc constexpr explicit extern friend inline mutable override private protected public register static template typedef virtual volatile
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
@@ -103,10 +103,10 @@ syn keyword cConstant true false
 
 
 hi def link mycppBinding Binding
-hi def link mycppBindingOperator Binding
+"hi def link mycppBindingOperator Binding
 "hi def link mycppBindingFP Binding
 hi def link mycppBindingType Binding
-"hi def link mycppBindingEnum Binding
+hi def link mycppBindingEnum Binding
 hi def link mycppBindingCF Binding
 hi def link mycppBindingCFOperator Binding
 hi def link mycppConstant Constant

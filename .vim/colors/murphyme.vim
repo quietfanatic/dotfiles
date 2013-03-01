@@ -9,12 +9,12 @@ endif
 let g:colors_name = "murphyme"
 
 "hi Normal     ctermfg=none       guifg=none
-hi Comment     ctermfg=LightRed
+hi Comment     ctermfg=Lightred
 hi Constant    ctermfg=lightgreen
 hi Identifier  ctermfg=lightcyan
 hi Ignore      ctermfg=black
 hi PreProc     ctermfg=LightBlue
-hi Special     ctermfg=LightRed
+hi Special     ctermfg=Lightred
 hi Statement   ctermfg=Yellow
 hi Type        ctermfg=darkcyan
 hi StorageClass ctermfg=lightgrey

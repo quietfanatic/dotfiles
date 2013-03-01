@@ -14,6 +14,12 @@ set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 set foldlevelstart=99
 set foldminlines=3
 
+" YESSSSS
+set wildmode=longest,list
+
+" This really shouldn't be necessary.
+inoremap # X#
+
 " Most of these were copied from various places on the internet.  I forgot where.
 
 inoremap <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
