@@ -26,6 +26,8 @@ hi cErrInParen ctermbg=None ctermfg=None
 hi MatchParen ctermbg=DarkBlue
 
 hi LineNr       ctermfg=Grey
+"hi CursorLine   cterm=bold
+hi CursorLineNR ctermfg=White
 hi StatusLine   cterm=none ctermbg=Black ctermfg=Grey
 hi StatusLineNC cterm=none ctermbg=Black ctermfg=Grey
 hi VertSplit    cterm=none ctermbg=Black ctermfg=Grey

@@ -10,12 +10,29 @@ set si
 set nu
 set et
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
-"set mouse=a
+set mouse=a
 set foldlevelstart=99
 set foldminlines=3
-
-" YESSSSS
 set wildmode=longest,list
+set is
+set dy=lastline,uhex
+set sb
+set spr
+set title
+set sc
+set report=0
+set ci
+ " Leaving files all over the current directory is messy
+set dir=~/tmp
+set bdir=~/tmp
+ " This is cool
+set udf
+set udir=~/tmp
+
+
+ " Consistency is good.
+set ve=onemore
+noremap <End> $l
 
 " This really shouldn't be necessary.
 inoremap # X#
@@ -31,6 +48,7 @@ let treeExplWinSize = 24
 
 let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
+let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
 
 " Add highlighting for function definition in C++
 autocmd BufEnter *.cpp set syntax=mycpp
@@ -56,3 +74,15 @@ function! SmartHome()
 endfunction
 noremap <expr> <silent> <Home> SmartHome()
 imap <silent> <Home> <C-O><Home>
+
+ " From the help file
+function! CleverTab()
+   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+      return "\<Tab>"
+   else
+      return "\<C-N>"
+   endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+
+

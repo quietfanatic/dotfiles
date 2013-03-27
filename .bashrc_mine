@@ -2,6 +2,7 @@
 export EDITOR=vim
 
 alias ja=LC_ALL=ja_JP.UTF-8
+alias en=LC_ALL=en_US.UTF-8
 
 alias ..='cd ..'
 
