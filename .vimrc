@@ -10,7 +10,6 @@ set si
 set nu
 set et
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
-set mouse=a
 set foldlevelstart=99
 set foldminlines=3
 set wildmode=longest,list
@@ -60,7 +59,7 @@ autocmd Syntax ruby set ts=2
 
 autocmd BufEnter *.p6 set syntax=
 autocmd BufEnter *.cpp.epl set syntax=mycpp
-
+autocmd BufEnter *.ohs set syntax=haskell
 
 function! SmartHome()
   let first_nonblank = match(getline('.'), '\S') + 1
