@@ -26,9 +26,9 @@ default_color ffffff
 draw_graph_borders yes
 draw_shades yes
 	# For completely transparent window
-own_window_transparent yes
+#own_window_transparent yes
 	# For semi-transparent window (255 = solid)
-#own_window_argb_value 120
+own_window_argb_value 120
 
 	# Appearance for light backgrounds
 #default_color 000000
@@ -37,7 +37,7 @@ own_window_transparent yes
 #own_window_transparent yes
 
 	# Default font
-xftfont sans:size=8
+xftfont Droid Sans:size=8
 
 	# Use K, M, G etc. instead of KiB, MiB, GiB etc. for data sizes
 short_units yes
@@ -56,7 +56,7 @@ TEXT
 # header text is near useless but it makes the monitor look much nicer.
 $alignc$nodename  -  $sysname
 $alignc$kernel
-$alignc${time %m-%d  %H:%M:%S}${font sans:size=4}
+$alignc${time %Y-%m-%d  %H:%M:%S}${font sans:size=4}
 $hr${font sans:size=6}
 ${font}CPU:$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font sans:size=4}
 ${font sans:size=2}${cpugraph cpu1}
@@ -70,7 +70,7 @@ $fs_bar${font sans:size=4}
 ${font}R $diskio_read$alignr$diskio_write W${font sans:size=4}
 # The spacing between these graphs may have to be adjusted if you change fonts
 ${diskiograph_read 20,65 20000}  ${diskiograph_write 20,65 20000}${font sans:size=4}
-$battery_bar${font sans:size=6}
+$battery_bar$font
 ${wireless_essid wlan0}$font
 IP:$alignr${addr wlan0}${font sans:size=7}
 ${wireless_link_bar wlan0}${font sans:size=4}
