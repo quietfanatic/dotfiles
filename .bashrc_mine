@@ -1,4 +1,7 @@
 
+ # Set terminal window title
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME} `dirs -0` \007"'
+
 export EDITOR=vim
 
 alias ja=LC_ALL=ja_JP.UTF-8
