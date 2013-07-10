@@ -2,6 +2,12 @@
 
  # Configure touchpad
 synclient TapButton2=2 TapButton3=3 FastTaps=1 VertScrollDelta=-101 HorizScrollDelta=-101
+ # Start timidity as an alsa daemon
+if which timidity; then
+    pgrep -x timidity || timidity -iA -OO &
+fi
+ # Remap some keys.
+sleep 10;
 xmodmap - <<END
 keycode 110 = Prior
 keycode 112 = Home
