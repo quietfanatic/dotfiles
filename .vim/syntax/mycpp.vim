@@ -7,7 +7,7 @@ syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
-syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\)"
+syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\|\<final\>\)"
 syn region mycppEnum1 start="\zs\<enum\>[^{;]*{" end=";" transparent contains=mycppBindingType,mycppBinding,mycppEnum2
 syn region mycppEnum2 start="{" end="}" transparent contained contains=mycppBindingEnum
 syn match mycppBindingEnum contained "\%([{,][\n 	]*\)\@<=\zs\h\w*\ze\_s*[=,}]"
@@ -35,7 +35,7 @@ syn keyword mycppAllocFunction malloc realloc calloc free
 syn keyword mycppLabel case default
 syn match mycppUserLabel "[;{]\_s*\zs\h\w*\ze:\_s"
 
-syn keyword mycppStorageEtc constexpr explicit extern friend inline mutable override private protected public register static template typedef virtual volatile
+syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
