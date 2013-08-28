@@ -3,5 +3,7 @@
 framedrop=1
 ass=1
 af=scaletempo
-forceidx=1
-
+fs=1
+ao=sdl
+vo=gl_nosw
+cache=8192

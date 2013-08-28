@@ -6,6 +6,8 @@ export EDITOR=vim
 
 alias ja=LC_ALL=ja_JP.UTF-8
 alias en=LC_ALL=en_US.UTF-8
+alias ja7z='LC_ALL=ja_JP.UTF-8 wine ~/.wine/drive_c/Program\ Files\ \(x86\)/7-Zip/7z.exe'
+alias sjiscat='iconv -f sjis -t utf8'
 
 alias ..='cd ..'
 

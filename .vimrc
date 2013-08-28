@@ -53,6 +53,7 @@ let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
 autocmd BufEnter *.cpp set syntax=mycpp
 autocmd BufEnter *.c set syntax=mycpp
 autocmd BufEnter *.h set syntax=mycpp
+autocmd BufEnter *.java set syntax=mycpp
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
@@ -84,4 +85,13 @@ function! CleverTab()
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
+" Bring attention to too-long lines (is.gd/IBV2013)
+highlight ColorColumn ctermbg=darkgrey
+call matchadd('ColorColumn', '\%81v', 100)
 
+" Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
+set listchars=tab:⇥\ ,trail:·,nbsp:·
+set list
+
+" Make this easier (is.gd/IBV2013)
+nnoremap ; :

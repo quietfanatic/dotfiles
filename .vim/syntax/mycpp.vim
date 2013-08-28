@@ -7,7 +7,7 @@ syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
-syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\|\<final\>\)"
+syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\|\<final\>\|\<extends\>\|\<implements\>\)"
 syn region mycppEnum1 start="\zs\<enum\>[^{;]*{" end=";" transparent contains=mycppBindingType,mycppBinding,mycppEnum2
 syn region mycppEnum2 start="{" end="}" transparent contained contains=mycppBindingEnum
 syn match mycppBindingEnum contained "\%([{,][\n 	]*\)\@<=\zs\h\w*\ze\_s*[=,}]"
