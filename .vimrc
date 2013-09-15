@@ -54,13 +54,13 @@ autocmd BufEnter *.cpp set syntax=mycpp
 autocmd BufEnter *.c set syntax=mycpp
 autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
+autocmd BufEnter *.p6 set syntax=
+autocmd BufEnter *.cpp.epl set syntax=mycpp
+autocmd BufEnter *.hs set syntax=myhs
+autocmd BufEnter *.ohs set syntax=myhs
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
-
-autocmd BufEnter *.p6 set syntax=
-autocmd BufEnter *.cpp.epl set syntax=mycpp
-autocmd BufEnter *.ohs set syntax=haskell
 
 function! SmartHome()
   let first_nonblank = match(getline('.'), '\S') + 1

@@ -17,3 +17,4 @@
 !.vim/syntax
 .vim/syntax/*
 !.vim/syntax/mycpp.vim
+!.vim/syntax/myhs.vim
