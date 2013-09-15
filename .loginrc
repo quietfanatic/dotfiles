@@ -8,3 +8,4 @@ if which timidity; then
 fi
  # Remap some keys.
 sleep 10;
+xmodmap ~/.Xmodmap
