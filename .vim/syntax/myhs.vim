@@ -6,25 +6,52 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-syn match myhsBindingRegion "\%(^\|\\\)\%([^=<\-:]\|<-\@!\|->\@!\|::\@!\)* \%(=\|<-\|->\) " transparent contains=myhsBinding,myhsStatement,myhsStatementOp,myhsConditional,myhsComma,hsString,hsCharacter,hsNumber,hsFloat,myhsLambda,hsLineComment,hsBlockComment
-syn match myhsBinding "\<[a-z][a-zA-Z0-9_]*\>'*" contained contains=NONE
+syn match myhsBindingRegion "\%(^\|\\\|\%(\<where\>\|\<let\>\)\@<=\)\%([^\\-]\|--\@!\)\{-}\ze[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(|\|=\|<-\|->\)[\-!#$%&*+/<=>?@\\\^|~.]\@!" transparent contains=myhsBinding,myhsStatement,myhsStatementOp,myhsConditional,myhsComma,myhsBadComma,hsString,hsCharacter,hsNumber,hsFloat,myhsLambda,hsLineComment,hsBlockComment,myhsArrow,myhsConstructor,myhsListDelim,myhsCons,myhsUnit
+syn match myhsBinding "\<[a-z][a-zA-Z0-9_]*\>'*\|:\@<![\-!#$%&*+/<=>?@\\\^|~]*" contained contains=NONE
 syn match myhsTypeBinding "\<[A-Z][a-zA-Z0-9_]*\>'*" contained contains=NONE
+syn match myhsTypeVar "\<[a-z][a-zA-Z0-9_]*\>'*" contained
 
-syn match myhsTypeConstraint "^\s*[a-z][a-zA-Z0-9_]*\>'*\ze\s*::"
+syn match myhsTypeConstraint "^\s*\%([a-z][a-zA-Z0-9_]*\>'*\|([\-!#$%&*+/<=>?@\\\^|~]*)\)\s*\ze::" transparent contains=myhsBinding
+syn region myhsTypeExpr start="[\-!#$%&*+/<=>?@\\\^|~.:]\@<!::[\-!#$%&*+/<=>?@\\\^|~.:]\@!" end="\ze\%(\n\%(\s*\(=>\|->\)\)\@!\|\])\|\<of\>\)" contains=myhsParensT,myhsListT,myhsDC,myhsTypeVar,myhsContext,hsLineComment,hsBlockComment
+syn region myhsParensT start="(" end=")" contained contains=myhsParensT,myhsListT,myhsTypeVar,hsLineComment,hsBlockComment
+syn region myhsListT start="\[" end="\]" contained contains=myhsParensT,myhsListT,myhsTypeVar,hsLineComment,hsBlockComment
+
+syn match myhsConstructor "\<[A-Z][a-zA-Z0-9_]*\>'*\.\@!"
+syn match myhsCons "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!:[\-!#$%&*+/<=>?@\\\^|~.:]\@!"
 
 syn keyword myhsStatement do mdo rec proc case of let in where
-syn match myhsStatementOp "[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(=\|::\|->\|<-\||\|@\)[\-!#$%&*+/<=>?@\\\^|~.]\@!"
+syn match myhsStatementOp "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!\%(=\|<-\||\|@\|\.\.\)[\-!#$%&*+/<=>?@\\\^|~.:]\@!"
+syn match myhsArrow "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!->[\-!#$%&*+/<=>?@\\\^|~.:]\@!"
 syn match myhsLambda "\\" contained
-syn match myhsComma ","
+"syn match myhsComma ","
+syn match myhsBadComma ",\%(\_s*[\])}]\)\@="
+syn match myhsUnit "()"
+syn match myhsContext "=>"
+syn match myhsDC "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!::[\-!#$%&*+/<=>?@\\\^|~.:]\@!" contained
+syn match myhsListDelim "\[\|\]"
 syn keyword myhsConditional if then else
 
 syn match myhsRecord "{\_[^};]*}" transparent contains=TOP,myhsBindingRegion
 
-syn region myhsTypeDecl start="\<data\>\|\<newtype\>\|\<class\>" skip="\n\s\s*\S" end="\n" transparent contains=myhsTypeBindingPart,myhsTypeFieldBinding,myhsBindingRegion,myhsTypeConstraint,hsString,hsCharacter,hsNumber,hsFloat,hsLineComment,hsBlockComment
-syn match myhsTypeBindingPart "\%(\<data\>\|\<newtype\>\|\<class\>\|\s=\s\|\s|\s\)\s*[A-Z][a-zA-Z0-9_]*\>'*" transparent contained contains=myhsTypeBinding,myhsStatementOp
-syn match myhsTypeFieldPart "\%(\<[a-zA-Z][a-zA-Z0-9_]*\>'*\s*::\)" transparent contained contains=myhsBinding,myhsStatementOp
+syn region myhsClassDecl start="\<class\>\zs" end="\%(\<where\>\)\@<=" transparent contains=myhsTypeBinding,myhsTypeVar,myhsLineComment,myhsBlockComment,myhsContext,myhsStatement
 
-syn match myhsTypeAlias "\<type\>\s*[A-Z][a-zA-Z0-9_]*'*[^=]*=" transparent contains=myhsTypeBinding,myhsStatementOp
+syn region myhsTypeDecl start="\<data\>\|\<newtype\>" skip="\n\s\s*\S" end="\n" transparent contains=myhsTypeBindingLeft,myhsTypeBindingRight,myhsTypeFieldBinding,myhsBindingRegion,myhsTypeConstraint,hsString,hsCharacter,hsNumber,hsFloat,hsLineComment,hsBlockComment
+syn match myhsTypeBindingLeft "\%(\<data\>\|\<newtype\>\)\s*[^=]*\ze\%(=\|$\)" transparent contained contains=myhsTypeBinding,myhsStatementOp,myhsTypeKeyword,myhsTypeVar,hsLineComment,hsBlockComment
+syn match myhsTypeBindingRight "[=|]\s*[A-Z][a-zA-Z0-9_]*\>'*" transparent contained contains=myhsTypeBinding,myhsStatementOp,hsLineComment,hsBlockComment
+syn keyword myhsTypeKeyword data newtype class type contained
+syn match myhsTypeFieldPart "\%(\<[a-zA-Z][a-zA-Z0-9_]*\>'*\s*\ze::\)" transparent contained contains=myhsBinding,myhsStatementOp,hsLineComment,hsBlockComment
+
+syn region myhsTypeAlias start="\<type\>" end="\ze=" transparent contains=myhsTypeKeyword,myhsTypeBinding,myhsTypeVar nextgroup=myhsTypeAliasRight
+syn region myhsTypeAliasRight start="=" end="\ze\%(\n\%(\s*\%(=>\|->\)\)\@!\)" transparent contained contains=myhsStatementOp,myhsContext
+
+syn region myhsInstanceRegion start="\<instance\>" end="\<where\>" keepend transparent contains=myhsTypeVar,myhsStatement,myhsContext,hsLineComment,hsBlockComment
+syn keyword myhsInstance instance contained
+
+syn match myhsInfixDecl "\<infix[lr]\?\>\s*[0-9]\+\s*[\-!#$%&*+/<=>?@\\\^|~.]*" transparent contains=myhsInfixDeclBinding,hsNumber
+syn match myhsInfixDeclBinding "[\-!#$%&*+/<=>?@\\\^|~.]" contained
+
+syn region myhsModuleDef start="\<module\>" end="\<where\>" keepend transparent contains=myhsModule,myhsStatement,hsLineComment,hsBlockComment
+syn keyword myhsModule module contained
 
 " Strings and constants
 syn match   hsSpecialChar	contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
@@ -36,14 +63,9 @@ syn match   hsCharacter		"^'\([^\\]\|\\[^']\+\|\\'\)'" contains=hsSpecialChar,hs
 syn match   hsNumber		"\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>"
 syn match   hsFloat		"\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
 
-syn match myhsInfixDecl "\<infix[lr]\?\>\s*[0-9]\+\s*[\-!#$%&*+/<=>?@\\\^|~.]*" transparent contains=myhsInfixDeclBinding,hsNumber
-syn match myhsInfixDeclBinding "[\-!#$%&*+/<=>?@\\\^|~.]" contained
-
-
 " Keyword definitions. These must be patters instead of keywords
 " because otherwise they would match as keywords at the start of a
 " "literate" comment (see lhs.vim).
-syn match hsModule		"\<module\>"
 syn match hsImport		"\<import\>.*"he=s+6 contains=hsImportMod,hsLineComment,hsBlockComment
 syn match hsImportMod		contained "\<\(as\|qualified\|hiding\)\>"
 "syn match hsInfix		"\<\(infix\|infixl\|infixr\)\>"
@@ -98,77 +120,73 @@ syntax match	cCommentError	display "\*/" contained
 syntax match	cCommentStartError display "/\*"me=e-1 contained
 syn region	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
 
-" Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_hs_syntax_inits")
-  if version < 508
-    let did_hs_syntax_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
 
-  HiLink myhsBinding Identifier
-  HiLink myhsTypeConstraint Identifier
-  HiLink myhsTypeBinding Identifier
-  HiLink myhsInfixDeclBinding Identifier
-  HiLink myhsStatement Statement
-  HiLink myhsStatementOp Statement
-  HiLink myhsConditional Conditional
-  HiLink myhsComma Statement
+hi def link myhsBinding Identifier
+hi def link myhsTypeConstraint Identifier
+hi def link myhsTypeBinding Identifier
+hi def link myhsInfixDeclBinding Identifier
+hi def link myhsTypeVar Identifier
+hi def link myhsStatement Statement
+hi def link myhsStatementOp Statement
+hi def link myhsLambda Statement
+hi def link myhsArrow Statement
+hi def link myhsDC Statement
+hi def link myhsContext Statement
+hi def link myhsConditional Conditional
+hi def link myhsConstructor Constant
+hi def link myhsComma Constant
+hi def link myhsBadComma Error
+hi def link myhsUnit Constant
+hi def link myhsListDelim Constant
+hi def link myhsCons Constant
 
-  HiLink hsModule			  hsStructure
-  HiLink hsImport			  Include
-  HiLink hsImportMod			  hsImport
-  HiLink hsInfix			  PreProc
-  HiLink hsStructure			  Structure
-  HiLink hsStatement			  Statement
-  HiLink hsConditional			  Conditional
-  HiLink hsSpecialChar			  SpecialChar
-  HiLink hsTypedef			  Typedef
-  HiLink hsVarSym			  hsOperator
-  HiLink hsConSym			  hsOperator
-  HiLink hsOperator			  Operator
-  if exists("hs_highlight_delimiters")
-    " Some people find this highlighting distracting.
-    HiLink hsDelimiter			  Delimiter
-  endif
-  HiLink hsSpecialCharError		  Error
-  HiLink hsString			  String
-  HiLink hsCharacter			  Character
-  HiLink hsNumber			  Number
-  HiLink hsFloat			  Float
-  HiLink hsConditional			  Conditional
-  HiLink hsLiterateComment		  hsComment
-  HiLink hsBlockComment		  hsComment
-  HiLink hsLineComment			  hsComment
-  HiLink hsComment			  Comment
-  HiLink hsPragma			  SpecialComment
-  HiLink hsBoolean			  Boolean
-  HiLink hsType			  Type
-  HiLink hsMaybe			  hsEnumConst
-  HiLink hsOrdering			  hsEnumConst
-  HiLink hsEnumConst			  Constant
-  HiLink hsDebug			  Debug
-
-  HiLink cCppString		hsString
-  HiLink cCommentStart		hsComment
-  HiLink cCommentError		hsError
-  HiLink cCommentStartError	hsError
-  HiLink cInclude		Include
-  HiLink cPreProc		PreProc
-  HiLink cDefine		Macro
-  HiLink cIncluded		hsString
-  HiLink cError			Error
-  HiLink cPreCondit		PreCondit
-  HiLink cComment		Comment
-  HiLink cCppSkip		cCppOut
-  HiLink cCppOut2		cCppOut
-  HiLink cCppOut		Comment
-
-  delcommand HiLink
+hi def link hsImport			  Include
+hi def link hsImportMod			  hsImport
+hi def link hsInfix			  PreProc
+hi def link hsStructure			  Structure
+hi def link hsStatement			  Statement
+hi def link hsConditional			  Conditional
+hi def link hsSpecialChar			  SpecialChar
+hi def link hsTypedef			  Typedef
+hi def link hsVarSym			  hsOperator
+hi def link hsConSym			  hsOperator
+hi def link hsOperator			  Operator
+if exists("hs_highlight_delimiters")
+  " Some people find this highlighting distracting.
+  hi def link hsDelimiter			  Delimiter
 endif
+hi def link hsSpecialCharError		  Error
+hi def link hsString			  String
+hi def link hsCharacter			  Character
+hi def link hsNumber			  Number
+hi def link hsFloat			  Float
+hi def link hsConditional			  Conditional
+hi def link hsLiterateComment		  hsComment
+hi def link hsBlockComment		  hsComment
+hi def link hsLineComment			  hsComment
+hi def link hsComment			  Comment
+hi def link hsPragma			  SpecialComment
+hi def link hsBoolean			  Boolean
+hi def link hsType			  Type
+hi def link hsMaybe			  hsEnumConst
+hi def link hsOrdering			  hsEnumConst
+hi def link hsEnumConst			  Constant
+hi def link hsDebug			  Debug
+
+hi def link cCppString		hsString
+hi def link cCommentStart		hsComment
+hi def link cCommentError		hsError
+hi def link cCommentStartError	hsError
+hi def link cInclude		Include
+hi def link cPreProc		PreProc
+hi def link cDefine		Macro
+hi def link cIncluded		hsString
+hi def link cError			Error
+hi def link cPreCondit		PreCondit
+hi def link cComment		Comment
+hi def link cCppSkip		cCppOut
+hi def link cCppOut2		cCppOut
+hi def link cCppOut		Comment
 
 let b:current_syntax = "haskell"
 
