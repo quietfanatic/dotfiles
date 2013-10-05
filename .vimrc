@@ -4,11 +4,12 @@ colorscheme murphyme  " Not included in this repo
 set ts=4
 set sw=4
 set so=3
-set sbr=↳\ 
+set sbr=↳
 set lbr
 set si
 set nu
 set et
+set mouse=a  " Make sure to install vim with +xterm_clipboard
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 set foldlevelstart=99
 set foldminlines=3
@@ -90,7 +91,7 @@ highlight ColorColumn ctermbg=darkgrey
 call matchadd('ColorColumn', '\%81v', 100)
 
 " Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
-set listchars=tab:⇥\ ,trail:·,nbsp:·
+set listchars=tab:·\ ,trail:·,nbsp:·
 set list
 
 " Make this easier (is.gd/IBV2013)
