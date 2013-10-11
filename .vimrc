@@ -7,7 +7,6 @@ set so=3
 set sbr=↳
 set lbr
 set si
-set nu
 set et
 set mouse=a  " Make sure to install vim with +xterm_clipboard
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
@@ -28,6 +27,10 @@ set bdir=~/tmp
  " This is cool
 set udf
 set udir=~/tmp
+ " Line numbers on large terminals only
+if &columns > 84
+    set nu
+endif
 
 
  " Consistency is good.
