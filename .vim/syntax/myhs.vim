@@ -42,7 +42,7 @@ syn keyword myhsTypeKeyword data newtype class type contained
 syn match myhsTypeFieldPart "\%(\<[a-zA-Z][a-zA-Z0-9_]*\>'*\s*\ze::\)" transparent contained contains=myhsBinding,myhsStatementOp,hsLineComment,hsBlockComment
 
 syn region myhsTypeAlias start="\<type\>" end="\ze=" transparent contains=myhsTypeKeyword,myhsTypeBinding,myhsTypeVar nextgroup=myhsTypeAliasRight
-syn region myhsTypeAliasRight start="=" end="\ze\%(\n\%(\s*\%(=>\|->\)\)\@!\)" transparent contained contains=myhsStatementOp,myhsContext
+syn region myhsTypeAliasRight start="=" end="\ze\%(\n\%(\s*\%(=>\|->\)\)\@!\)" transparent contained contains=myhsStatementOp,myhsContext,hsLineComment,hsBlockComment
 
 syn region myhsInstanceRegion start="\<instance\>" end="\<where\>" keepend transparent contains=myhsTypeVar,myhsStatement,myhsContext,hsLineComment,hsBlockComment
 syn keyword myhsInstance instance contained
