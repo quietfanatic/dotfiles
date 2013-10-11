@@ -120,6 +120,8 @@ syntax match	cCommentError	display "\*/" contained
 syntax match	cCommentStartError display "/\*"me=e-1 contained
 syn region	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
 
+syn match myhstitle "------*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?-----$"
+
 
 hi def link myhsBinding Identifier
 hi def link myhsTypeConstraint Identifier
@@ -139,6 +141,7 @@ hi def link myhsBadComma Error
 hi def link myhsUnit Constant
 hi def link myhsListDelim Constant
 hi def link myhsCons Constant
+hi def link myhsTitle Title
 
 hi def link hsImport			  Include
 hi def link hsImportMod			  hsImport
