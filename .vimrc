@@ -37,13 +37,8 @@ endif
 set ve=onemore
 noremap <End> $l
 
-" This really shouldn't be necessary.
+ " This really shouldn't be necessary.
 inoremap # X#
-
-" Most of these were copied from various places on the internet.  I forgot where.
-
-inoremap <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
-inoremap <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
 
 
 let treeExplVertical = 1
@@ -52,6 +47,7 @@ let treeExplWinSize = 24
 let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
 let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
+let NERDTreeMouseMode = 3  " single click to open files
 
 " Add highlighting for function definition in C++
 autocmd BufEnter *.cpp set syntax=mycpp
@@ -66,6 +62,10 @@ autocmd BufEnter *.ohs set syntax=myhs
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
 
+ " These were copied from various places on the internet.  I forgot where.
+inoremap <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
+inoremap <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
+ " As was this
 function! SmartHome()
   let first_nonblank = match(getline('.'), '\S') + 1
   if first_nonblank == 0
@@ -89,13 +89,13 @@ function! CleverTab()
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
-" Bring attention to too-long lines (is.gd/IBV2013)
+ " Bring attention to too-long lines (is.gd/IBV2013)
 highlight ColorColumn ctermbg=darkgrey
 call matchadd('ColorColumn', '\%81v', 100)
 
-" Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
+ " Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
 set listchars=tab:·\ ,trail:·,nbsp:·
 set list
 
-" Make this easier (is.gd/IBV2013)
+ " Make this easier (is.gd/IBV2013)
 nnoremap ; :
