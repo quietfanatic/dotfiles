@@ -78,5 +78,3 @@ IP:$alignr${addr wlan0}${font sans:size=7}
 ${wireless_link_bar wlan0}${font sans:size=4}
 ${font}v ${downspeed wlan0}$alignr${upspeed wlan0} ^
 ${downspeedgraph wlan0 20,65 1000 -l}  ${upspeedgraph wlan0 20,65 1000 -l}
-# I wanted to have graphs for download/upload speed but for some reason
-# they wouldn't work.
