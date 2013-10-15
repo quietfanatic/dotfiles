@@ -70,7 +70,7 @@ hi def link myhsArrow myhsStatementOp
 hi def link myhsLambda myhsStatementOp
 
  " Normal expressions
-syn region myhsParensN start="(" end=")" contains=@myhsExprs
+syn region myhsParensN start="()\@!" end=")" contains=@myhsExprs
 syn region myhsTupleN matchgroup=myhsTupleDelim start="()\@!\%(\%(\_[^(),]\|(\%(\_[^()]\|(\_[^()]\{-})\)\{-})\)\{-},\)\@=" end=")" contains=@myhsExprs
 syn region myhsRecordN matchgroup=myhsRecordDelim start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contains=@myhsExprs
 syn cluster myhsExprs contains=myhsParensN,myhsTupleN,myhsRecordN,@myhsComments,@myhsConstants,@myhsStatements
@@ -93,7 +93,7 @@ hi def link myhsBinding Identifier
 syn match myhsContext "=>" contained
 syn keyword myhsForall forall contained
 syn match myhsTypeVar "\<[a-z][a-zA-Z0-9_]*\>'*" contained
-syn region myhsParensT start="(" end=")" contained contains=@myhsTypes
+syn region myhsParensT start="()\@!" end=")" contained contains=@myhsTypes
 syn region myhsListT start="\[" end="]" contained contains=@myhsTypes
 syn region myhsRecordT start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contained contains=myhsRecordTField,myhsBadComma
 syn match myhsRecordTField "\<[a-z][a-zA-Z0-9_]*\>'*" contained nextgroup=myhsRecordTDC skipwhite
