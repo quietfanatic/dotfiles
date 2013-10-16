@@ -102,7 +102,7 @@ syn region myhsRecordTType start="" end="\%(,\|}\)\@=" contained contains=@myhsT
 syn cluster myhsTypes contains=myhsContext,myhsForall,myhsTypeVar,myhsParensT,myhsListT,myhsRecordT,@myhsComments,myhsStatementOp
 syn region myhsTypeExpr start="" end="\%(\n\%(\s*\(=>\|->\)\)\@!\|\]\|)\|}\|,\|\<of\>\)\@=" contained contains=@myhsTypes
 syn match myhsDC "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!::[\-!#$%&*+/<=>?@\\\^|~.:]\@!" nextgroup=myhsTypeExpr
-syn region myhsTypeAnnotation start="\z(\%(^\|\%(\|\<where\>\|\<let\>\)\)\@<=\s*\)\%([a-z][a-zA-Z0-9_]*\>'*\|([\-!#$%&*+/<=>?@\\\^|~]*)\)\s*::" skip="\n\z1\s\s*\S" end="$" keepend transparent contains=myhsBinding,myhsDC
+syn region myhsTypeAnnotation start="\z(\%(^\|\<where\>\|\<let\>\)\@<=\s*\)\%([a-z][a-zA-Z0-9_]*\>'*\|([\-!#$%&*+/<=>?@\\\^|~]*)\)\s*::" skip="\n\z1\s\s*\S" end="$" keepend transparent contains=myhsBinding,myhsDC
 hi def link myhsContext myhsStatementOp
 hi def link myhsTypeVar myhsBinding
 hi def link myhsRecordTField myhsBinding
