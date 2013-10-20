@@ -56,7 +56,8 @@ TEXT
 # header text is near useless but it makes the monitor look much nicer.
 $alignc$nodename  -  $sysname
 $alignc$kernel
-$alignc${time %Y-%m-%d  %H:%M:%S}${font sans:size=4}
+$alignc${time %Y-%m-%d  %H:%M:%S}
+$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}${font sans:size=4}
 $hr${font sans:size=6}
 ${font}CPU:$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font sans:size=4}
 ${font sans:size=2}${cpugraph cpu1}
