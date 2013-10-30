@@ -24,4 +24,4 @@ function bashrc {
 export HISTCONTROL=erasedups
 
 PS1='${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u@\h\[\e[01;34m\] \w \$\[\e[01;36m\] '
-#trap 'echo -en '\''\e[00m'\''' DEBUG
+trap 'echo -en '\''\e[00m'\''' DEBUG
