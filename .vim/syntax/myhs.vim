@@ -77,9 +77,9 @@ syn cluster myhsExprs contains=myhsParensN,myhsTupleN,myhsRecordN,@myhsComments,
 hi def link myhsRecordDelim myhsConstant
 
  " Pattern expressions
-syn match myhsPatternOp "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!\%(@\|!\)[\-!#$%&*+/<=>?@\\\^|~.:]\@!" contained
 syn match myhsBinding "\<[a-z][a-zA-Z0-9_]*\>'*\|:\@<![\-!#$%&*+/<=>?@\\\^|~]\+" contained
 syn match myhsBindingR "\<[a-z][a-zA-Z0-9_]*\>'*\(\s*=\)\@!" contained
+syn match myhsPatternOp "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!\%(@\|!\)[\-!#$%&*+/<=>?@\\\^|~.:]\@!" contained
 syn region myhsParensP start="()\@!" end=")" contained contains=@myhsPatterns
 syn region myhsTupleP matchgroup=myhsTupleDelim start="()\@!\%(\%(\_[^(),]\|(\_[^()]\{-})\)\{-},\)\@=" end=")" contained contains=@myhsPatterns
 syn region myhsRecordP start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contained contains=@myhsPatternsR
@@ -87,6 +87,7 @@ syn cluster myhsPatterns contains=myhsPatternOp,myhsParensP,myhsTupleP,myhsRecor
 syn cluster myhsPatternsR contains=myhsPatternOp,myhsParensP,myhsTupleP,myhsRecordP,myhsBindingR,@myhsComments,@myhsConstants,@myhsStatements
 syn match myhsPattern "\%(^\|\%(\\\|\<where\>\|\<let\>\)\@<=\)\%([^\\:-]\|--\@!\|::\@!\)\{-}\ze[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(|\|=\|<-\|->\|::\)[\-!#$%&*+/<=>?@\\\^|~.]\@!" transparent contains=@myhsPatterns,myhsDC
 hi def link myhsBindingR myhsBinding
+hi def link myhsPatternOp myhsStatementOp
 hi def link myhsBinding Identifier
 
  " Type expressions
