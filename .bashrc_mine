@@ -1,8 +1,4 @@
 
- # Set terminal window title
-if [[ $COLOR_TERM ]]; then
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME} `dirs -0` \007"'
-fi
 export EDITOR=vim
 
 alias ja=LC_ALL=ja_JP.UTF-8
@@ -23,5 +19,12 @@ function bashrc {
 
 export HISTCONTROL=erasedups
 
-PS1='${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u@\h\[\e[01;34m\] \w \$\[\e[01;36m\] '
-trap 'echo -en '\''\e[00m'\''' DEBUG
+ # Set prompt, colors, terminal window title
+ # NOTE: the trap should be the last thing run in this file
+if [[ $COLORTERM ]]; then
+    PS1='\e]0;${USER}@${HOSTNAME} `dirs -0` \$\007${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u@\h\[\e[01;34m\] \w \$\[\e[01;36m\] '
+    trap 'echo -ne "\e[0m\e]0;${USER}@${HOSTNAME} `dirs -0` \$ ${BASH_COMMAND}\007"' DEBUG
+else
+    PS1='${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u@\h\[\e[01;34m\] \w \$\[\e[01;36m\] '
+    trap 'echo -ne "\e[0m"' DEBUG
+fi
