@@ -17,9 +17,9 @@ double_buffer yes
 alignment top_right
 default_bar_size 136 4
 default_graph_size 136 20
-gap_x 12
-gap_y 20
-minimum_size 136 250
+gap_x 8
+gap_y 8
+#minimum_size 136 250
 
 	# Appearance for dark backgrounds
 default_color ffffff
@@ -57,30 +57,30 @@ TEXT
 $font$alignc$nodename  -  $sysname
 $alignc$kernel
 $alignc${time %Y-%m-%d  %H:%M:%S}
-$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}${font sans:size=4}
-$hr${font sans:size=6}
-${font}CPU$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font sans:size=4}
-${font sans:size=2}${cpugraph cpu1}
+$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}${font Droid Sans:size=4}
+$hr${font Droid Sans:size=5}
+${font}CPU$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font Droid Sans:size=4}
+${font Droid Sans:size=2}${cpugraph cpu1}
 ${cpugraph cpu3}
 ${cpugraph cpu4}
-${cpugraph cpu2}${font sans:size=6}
-${font}MEM$alignr$mem${font sans:size=6}
+${cpugraph cpu2}${font Droid Sans:size=4}
+${font}MEM$alignr$mem${font Droid Sans:size=6}
 $membar$font
-FS$alignr$fs_used${font sans:size=6}
-$fs_bar${font sans:size=4}
-${font}STASH$alignr${fs_used /stash}${font sans:size=6}
+FS$alignr$fs_used${font Droid Sans:size=6}
+$fs_bar${font Droid Sans:size=4}
+${font}STASH$alignr${fs_used /stash}${font Droid Sans:size=6}
 ${fs_bar /stash}
-${font}R $diskio_read$alignr$diskio_write W${font sans:size=4}
+${font}R $diskio_read$alignr$diskio_write W${font Droid Sans:size=4}
 # The spacing between these graphs may have to be adjusted if you change fonts
-${diskiograph_read 20,65 20000}   ${diskiograph_write 20,65 20000}${font sans:size=4}$font
-BAT$alignr${battery}${font sans:size=6}
+${diskiograph_read 20,65 20000}   ${diskiograph_write 20,65 20000}${font Droid Sans:size=4}${font Droid Sans:size=6}
+${font}BAT$alignr${battery}${font Droid Sans:size=6}
 $battery_bar$font
 ${if_up eth0}(eth0)$font
-IP$alignr${addr eth0}${font sans:size=7}
-${wireless_link_bar eth0}${font sans:size=4}
-${font}v ${downspeed eth0}$alignr${upspeed eth0} ^${font sans:size=4}
+IP$alignr${addr eth0}${font Droid Sans:size=7}
+${wireless_link_bar eth0}${font Droid Sans:size=4}
+${font}v ${downspeed eth0}$alignr${upspeed eth0} ^${font Droid Sans:size=4}
 ${downspeedgraph eth0 20,65 1000 -l}   ${upspeedgraph eth0 20,65 1000 -l}$else${wireless_essid wlan0}$font
-IP$alignr${addr wlan0}${font sans:size=7}
-${wireless_link_bar wlan0}${font sans:size=4}
-${font}v ${downspeed wlan0}$alignr${upspeed wlan0} ^${font sans:size=4}
+IP$alignr${addr wlan0}${font Droid Sans:size=7}
+${wireless_link_bar wlan0}${font Droid Sans:size=4}
+${font}v ${downspeed wlan0}$alignr${upspeed wlan0} ^${font Droid Sans:size=4}
 ${downspeedgraph wlan0 20,65 1000 -l}   ${upspeedgraph wlan0 20,65 1000 -l}$endif
