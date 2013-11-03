@@ -61,9 +61,9 @@ $alignc${tztime UTC %Y-%m-%d  %H:%M:%S}${font Droid Sans:size=4}
 $hr${font Droid Sans:size=5}
 ${font}CPU$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font Droid Sans:size=4}
 ${font Droid Sans:size=2}${cpugraph cpu1}
+${cpugraph cpu2}
 ${cpugraph cpu3}
-${cpugraph cpu4}
-${cpugraph cpu2}${font Droid Sans:size=4}
+${cpugraph cpu4}${font Droid Sans:size=4}
 ${font}MEM$alignr$mem${font Droid Sans:size=6}
 $membar$font
 FS$alignr$fs_used${font Droid Sans:size=6}
