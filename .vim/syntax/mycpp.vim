@@ -3,7 +3,7 @@
 " All things with names starting with mycpp are public domain
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
-syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\)[*&]*\s\s*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved
+syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\)[*&]*\s\s*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
@@ -33,7 +33,7 @@ syn keyword mycppRepeat while for do
 syn keyword mycppAlloc new delete
 syn keyword mycppAllocFunction malloc realloc calloc free
 syn keyword mycppLabel case default
-syn match mycppUserLabel "[;{]\_s*\zs\h\w*\ze:\_s"
+syn match mycppUserLabel "\h\w*\ze:\_s"
 
 syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
@@ -113,7 +113,7 @@ hi def link mycppConstant Constant
 hi def link mycppMiscConstant Constant
 hi def link mycppOperator Operator
 hi def link mycppLabel Label
-hi def link mycppUserLabel Label
+hi def link mycppUserLabel Binding
 hi def link mycppStatement Statement
 hi def link mycppConditional Conditional
 hi def link mycppException Exception
