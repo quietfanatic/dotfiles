@@ -3,7 +3,9 @@
 " All things with names starting with mycpp are public domain
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
-syn match mycppBinding "\%([0-9a-zA-Z_(]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\)[*&]*\s\s*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved
+syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
+syn match mycppNextBinding "[*&]*\s*\zs\h\w*\ze[{([=;,>)]" contained
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
@@ -103,6 +105,7 @@ syn keyword cConstant true false
 
 
 hi def link mycppBinding Binding
+hi def link mycppNextBinding Binding
 "hi def link mycppBindingOperator Binding
 "hi def link mycppBindingFP Binding
 hi def link mycppBindingType Binding
