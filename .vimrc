@@ -4,7 +4,7 @@ colorscheme murphyme  " Not included in this repo
 set ts=4
 set sw=4
 set so=3
-set sbr=↳
+set sbr=\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ↳
 set lbr
 set si
 set et
@@ -21,6 +21,7 @@ set title
 set sc
 set report=0
 set ci
+set cot=menu,longest
  " Leaving files all over the current directory is messy
 set dir=~/tmp
 set bdir=~/tmp
@@ -62,7 +63,7 @@ autocmd BufEnter *.ohs set syntax=myhs
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
 
- " These were copied from various places on the internet.  I forgot where.
+ " Thid were copied from somewhere on the internet.  I forgot where.
 inoremap <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
 inoremap <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
  " As was this
@@ -81,11 +82,11 @@ imap <silent> <Home> <C-O><Home>
 
  " From the help file
 function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<Tab>"
-   else
-      return "\<C-N>"
-   endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  else
+    return "\<C-N>"
+  endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
@@ -99,3 +100,4 @@ set list
 
  " Make this easier (is.gd/IBV2013)
 nnoremap ; :
+vnoremap ; :
