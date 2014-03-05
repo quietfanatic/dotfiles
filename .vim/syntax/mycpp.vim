@@ -35,7 +35,7 @@ syn keyword mycppRepeat while for do
 syn keyword mycppAlloc new delete
 syn match mycppAllocFunction "\<\%(malloc\|realloc\|calloc\|free\)\>\_s*(\@="
 syn keyword mycppLabel case default
-syn match mycppUserLabel "\h\w*\ze:\_s"
+syn match mycppUserLabel "\%(case\_s\_s*\)\@<!\h\w*\ze:\_s"
 
 syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
