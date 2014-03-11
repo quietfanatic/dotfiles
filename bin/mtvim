@@ -1,2 +1,6 @@
 #!/bin/bash
-exec mate-terminal --disable-factory -e "vim '$@'"
+if [[ $DISPLAY ]]; then
+    exec mate-terminal --disable-factory -e "vim '$@'"
+else
+    exec vim "$@"
+fi
