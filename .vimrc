@@ -80,12 +80,12 @@ endfunction
 noremap <expr> <silent> <Home> SmartHome()
 imap <silent> <Home> <C-O><Home>
 
- " From the help file
+ " Modified from the help file
 function! CleverTab()
-  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-    return "\<Tab>"
-  else
+  if getline('.')[col('.')-2] =~ '[a-zA-Z_0-9]'
     return "\<C-N>"
+  else
+    return "\<Tab>"
   endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
