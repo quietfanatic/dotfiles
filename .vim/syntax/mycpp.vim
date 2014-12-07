@@ -3,7 +3,7 @@
 " All things with names starting with mycpp are public domain
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
-syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
 syn match mycppNextBinding "[*&]*\s*\zs\h\w*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
@@ -15,6 +15,9 @@ syn region mycppEnum2 start="{" end="}" transparent contained contains=mycppBind
 syn match mycppBindingEnum contained "\%([{,][\n 	]*\)\@<=\zs\h\w*\ze\_s*[=,}]"
 syn match mycppBindingCF "\<CF(\s*\zs\h\w*\%(::\h\w*\)*\%(operator\)\@<!\s"
 syn match mycppBindingCFOperator "\<CF(\s*operator\>\s*\zs\S\S*\ze"
+syn match mycppJSFunction "\<function\>\s*\zs\%(\h\w*\)\?\s*([^)]*)" transparent contains=mycppJSReserved,mycppBindingWord
+syn match mycppJSObjectBinding "\<\%(this\|prototype\)\>\.\zs\h\w*\ze\s*==\@!\s*" contains=mycppJSReserved
+syn match mycppBindingWord "\h\w*" contained
 "syn region mycppFold0 start="^\S.*{$" end="^}" transparent fold
 "syn region mycppFold1 start="^    \S.*{$" end="^    }" transparent fold
 "syn region mycppFold2 start="^        \S.*{$" end="^        }" transparent fold
@@ -37,8 +40,11 @@ syn match mycppAllocFunction "\<\%(malloc\|realloc\|calloc\|free\)\>\_s*(\@="
 syn keyword mycppLabel case default
 syn match mycppUserLabel "\%(case\_s\_s*\)\@<!\<\h\w*\ze:\_s"
 
-syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept
+syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept in out inout
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
+syn keyword mycppJSReserved contained function var
+
+syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\\\\|\\/\)*/"
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn region cString start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cFormat,@Spell
@@ -107,6 +113,8 @@ syn match mycppTitle "/////.*/////$"
 
 hi def link mycppBinding Binding
 hi def link mycppNextBinding Binding
+hi def link mycppBindingWord Binding
+hi def link mycppJSObjectBinding Binding
 "hi def link mycppBindingOperator Binding
 "hi def link mycppBindingFP Binding
 hi def link mycppBindingType Binding
@@ -129,6 +137,7 @@ hi def link mycppAllocFunction Keyword
 hi def link mycppStorageEtc StorageClass
 hi def link Binding Identifier
 hi def link mycppTitle Title
+hi def link mycppJSRegex Constant
 
 hi def link cFormat		cSpecial
 hi def link cCppString		cString

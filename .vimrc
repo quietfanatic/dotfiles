@@ -1,10 +1,12 @@
 
+set encoding=utf-8  " Not always default I guess
+
 syntax enable
 colorscheme murphyme  " Not included in this repo
 set ts=4
 set sw=4
 set so=3
-set sbr=\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ↳
+set sbr=↳
 set lbr
 set si
 set et
@@ -57,6 +59,7 @@ autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
 autocmd BufEnter *.p6 set syntax=
 autocmd BufEnter *.cpp.epl set syntax=mycpp
+autocmd BufEnter *.js set syntax=mycpp
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
 
