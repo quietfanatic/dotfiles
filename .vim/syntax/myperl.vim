@@ -540,7 +540,7 @@ HiLink perlSubError		Error
 syn match myperlMy "\<\%(my\|our\|state\)\>\s*[$@%]\h\w*" contains=myperlBinding
 syn region myperlMys start="\<\%(my\|our\|state\)\>\s*(" end=")" transparent contains=myperlBinding
 syn match myperlBinding "[$@%]\h\w*" contained
-syn keyword myperlControl if elsif else unless while until do continue for foreach next last redo return die dump exit eval or and map grep
+syn keyword myperlControl if elsif else unless while until do continue for foreach next last redo return die dump exit exec system fork eval or and map grep
 syn match myperlControl "\%(&&\|||\|?\|//\)=\@!"
 syn keyword myperlModuleStuff use no require
 
