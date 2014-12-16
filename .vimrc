@@ -62,6 +62,7 @@ autocmd BufEnter *.cpp.epl set syntax=mycpp
 autocmd BufEnter *.js set syntax=mycpp
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
+autocmd FileType perl set syntax=myperl
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
@@ -100,6 +101,14 @@ call matchadd('ColorColumn', '\%81v', 100)
  " Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
 set listchars=tab:·\ ,trail:·,nbsp:·
 set list
+
+ " From http://stackoverflow.com/questions/5820793/vim-get-content-of-syntax-element-under-cursor
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
  " Make this easier (is.gd/IBV2013)
 nnoremap ; :
