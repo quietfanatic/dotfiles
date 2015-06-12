@@ -20,6 +20,7 @@
 !/.vim/syntax/myhs.vim
 !/.vim/syntax/myrkt.vim
 !/.vim/syntax/myperl.vim
+!/.vim/syntax/myperl6.vim
 !/bin
 /bin/*
 !/bin/mtvim
