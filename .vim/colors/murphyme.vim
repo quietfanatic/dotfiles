@@ -40,3 +40,10 @@ hi Question   ctermfg=LightGreen
 hi SpecialKey ctermfg=LightBlue
 hi Title      ctermfg=LightMagenta
 hi WarningMsg ctermfg=LightRed
+
+hi NERDTreeExecFile ctermfg=lightgreen
+hi NERDTreeDir ctermfg=lightblue
+hi NERDTreeUp ctermfg=lightblue
+hi NERDTreeDirSlash ctermfg=lightgrey
+hi NERDTreeOpenable ctermfg=lightgrey
+hi NERDTreeClosable ctermfg=yellow

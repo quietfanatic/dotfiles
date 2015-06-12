@@ -35,7 +35,6 @@ if &columns > 84
     set nu
 endif
 
-
  " Consistency is good.
 set ve=onemore
 noremap <End> $l
@@ -43,6 +42,7 @@ noremap <End> $l
  " This really shouldn't be necessary.
 inoremap # X#
 
+execute pathogen#infect()
 
 let treeExplVertical = 1
 let treeExplWinSize = 24
@@ -51,6 +51,8 @@ let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
 let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
 let NERDTreeMouseMode = 3  " single click to open files
+let NERDTreeMinimalUI = 1
+let NERDTreeAutoDeleteBuffer = 1
 
 " Add highlighting for function definition in C++
 autocmd BufEnter *.cpp set syntax=mycpp
@@ -62,6 +64,7 @@ autocmd BufEnter *.cpp.epl set syntax=mycpp
 autocmd BufEnter *.js set syntax=mycpp
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
+autocmd BufEnter *.hacc set syntax=hacc
 autocmd FileType perl set syntax=myperl
 
 autocmd Syntax ruby set sw=2

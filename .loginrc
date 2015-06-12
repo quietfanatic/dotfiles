@@ -3,9 +3,5 @@
 sleep 10;
  # Configure touchpad
 synclient TapButton2=2 TapButton3=3 SingleTapTimeout=100 VertScrollDelta=-101 HorizScrollDelta=-101
- # Start timidity as an alsa daemon
-if which timidity; then
-    pgrep -x timidity || timidity -iA -OO &
-fi
  # Remap some keys.
 xmodmap ~/.Xmodmap

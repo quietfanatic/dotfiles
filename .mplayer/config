@@ -3,6 +3,5 @@
 framedrop=1
 ass=1
 af=scaletempo
-ao=sdl
 fs=1
 cache=8192

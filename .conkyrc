@@ -57,7 +57,8 @@ TEXT
 $font$alignc$nodename  -  $sysname
 $alignc$kernel
 $alignc${time %Y-%m-%d  %H:%M:%S}
-$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}${font Droid Sans:size=4}
+$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}
+$alignc${tztime Japan %Y-%m-%d  %H:%M:%S}${font Droid Sans:size=4}
 $hr${font Droid Sans:size=5}
 ${font}CPU$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font Droid Sans:size=4}
 ${font Droid Sans:size=2}${cpugraph cpu1}
