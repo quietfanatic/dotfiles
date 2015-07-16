@@ -23,7 +23,7 @@ export HISTCONTROL=erasedups
 
  # Prevent rsync from breaking because apparently it runs this file
  #  and breaks if anything gets printed.  TECHNOLOGY!
-if [[ $- != *i* ]]; then
+if [[ $- == *i* ]]; then
      # Set prompt, colors, terminal window title
      # NOTE: the trap should be the last thing run in this file
     if [[ $COLORTERM ]]; then
