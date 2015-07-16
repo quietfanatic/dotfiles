@@ -26,9 +26,9 @@ default_color ffffff
 draw_graph_borders yes
 draw_shades yes
 	# For completely transparent window
-#own_window_transparent yes
+own_window_transparent yes
 	# For semi-transparent window (255 = solid)
-own_window_argb_value 120
+#own_window_argb_value 120
 
 	# Appearance for light backgrounds
 #default_color 000000
@@ -57,7 +57,8 @@ TEXT
 $font$alignc$nodename  -  $sysname
 $alignc$kernel
 $alignc${time %Y-%m-%d  %H:%M:%S}
-$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}${font Droid Sans:size=4}
+$alignc${tztime UTC %Y-%m-%d  %H:%M:%S}
+$alignc${tztime Japan %Y-%m-%d  %H:%M:%S}${font Droid Sans:size=4}
 $hr${font Droid Sans:size=5}
 ${font}CPU$alignr${cpu cpu1} | ${cpu cpu2} | ${cpu cpu3} | ${cpu cpu4}${font Droid Sans:size=4}
 ${font Droid Sans:size=2}${cpugraph cpu1}

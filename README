@@ -3,3 +3,9 @@ This is the repo for my configuration files.
 
 Yup.
 
+
+Miscellaneous notes:
+install vim, conky
+set up trigger for .loginrc
+source .bashrc_mine in .bashrc
+

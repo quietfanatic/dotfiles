@@ -3,18 +3,23 @@
 " All things with names starting with mycpp are public domain
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
-syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+ " Above bindings so that bindings outprioritize these
+syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>"
+
+syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
 syn match mycppNextBinding "[*&]*\s*\zs\h\w*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
 "syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
 syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\|\<final\>\|\<extends\>\|\<implements\>\)"
-syn region mycppEnum1 start="\zs\<enum\>[^{;]*{" end=";" transparent contains=mycppBindingType,mycppBinding,mycppEnum2
-syn region mycppEnum2 start="{" end="}" transparent contained contains=mycppBindingEnum
-syn match mycppBindingEnum contained "\%([{,][\n 	]*\)\@<=\zs\h\w*\ze\_s*[=,}]"
+syn match mycppEnum1 "\zs\<enum\>[^{;]*\ze{" transparent contains=mycppBindingType,mycppBinding nextgroup=mycppEnum2
+syn region mycppEnum2 start="{" end="}" transparent contained contains=TOP
 syn match mycppBindingCF "\<CF(\s*\zs\h\w*\%(::\h\w*\)*\%(operator\)\@<!\s"
 syn match mycppBindingCFOperator "\<CF(\s*operator\>\s*\zs\S\S*\ze"
+syn match mycppJSFunction "\<function\>\s*\zs\%(\h\w*\)\?\s*([^)]*)" transparent contains=mycppJSReserved,mycppBindingWord
+syn match mycppJSObjectBinding "\<\%(this\|prototype\)\>\.\zs\h\w*\ze\s*==\@!\s*" contains=mycppJSReserved
+syn match mycppBindingWord "\h\w*" contained
 "syn region mycppFold0 start="^\S.*{$" end="^}" transparent fold
 "syn region mycppFold1 start="^    \S.*{$" end="^    }" transparent fold
 "syn region mycppFold2 start="^        \S.*{$" end="^        }" transparent fold
@@ -24,21 +29,27 @@ syn match mycppBindingCFOperator "\<CF(\s*operator\>\s*\zs\S\S*\ze"
 "syn region mycppParens start="(\%(\s*[*&]\)\@!" end=")" contains=mycppParens,cStatement,cLabel,cConditional,cRepeat,cppStatement,cppOperator,cString,cCharacter,cNumbers,cOperator,cPreProcGroup,cComment,cCommentL
 
 syn keyword mycppConstant null nullptr
-syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>"
 syn match mycppControlOperator "\s\@<=\%(?\|&&\|||\)\s\@="
 syn keyword mycppControlOp and or
 syn keyword mycppOperator bitor xor compl bitand and_eq or_eq xor_eq not not_eq
 syn keyword mycppStatement goto break return continue asm
+syn keyword mycppControlFunction abort exit quick_exit _Exit system raise setjmp longjmp
 syn keyword mycppException throw try catch
 syn keyword mycppConditional if else switch
 syn keyword mycppRepeat while for do
 syn keyword mycppAlloc new delete
 syn match mycppAllocFunction "\<\%(malloc\|realloc\|calloc\|free\)\>\_s*(\@="
 syn keyword mycppLabel case default
-syn match mycppUserLabel "\%(case\_s\_s*\)\@<!\<\h\w*\ze:\_s"
+syn match mycppUserLabel "\%(case\_s\_s*\|::\s*\)\@<!\<\h\w*\ze:\_s"
 
-syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept
+syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutable override private protected public register static template typedef virtual volatile noexcept in out inout
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
+syn keyword mycppJSReserved contained function var
+
+syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\\\\|\\/\)*/"
+
+ " Down here so it outprioritized mycppMiscConstant
+syn match mycppBindingEnum contained "\%([,{]\_s*\)\@<=\h\w*" containedin=mycppEnum2
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn region cString start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cFormat,@Spell
@@ -96,8 +107,10 @@ syn match	cIncluded	display contained "<[^>]*>"
 syn match	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
 "syn match cLineSkip	"\\$"
 syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cErrInParen,cErrInBracket,cUserLabel,cSpecial,cOctalZero,cCppOutWrapper,cCppInWrapper,@cCppOutInGroup,cFormat,cNumber,cFloat,cOctal,cOctalError,cNumbersCom,cString,cCommentSkip,cCommentString,cComment2String,@cCommentGroup,cCommentStartError,cParen,cBracket,cMulti
-syn region	cDefine		start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell,mycppBindingEnum,mycppEnum2
+syn region	cDefine		start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell,mycppDefine
 syn region	cPreProc	start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
+
+syn match mycppDefine "\%(^\s*\%(%:\|#\)define\>\s*\)\@<=\h\w+" contained
 
 
 syn keyword cConstant __func__ L_tmpnam
@@ -107,6 +120,8 @@ syn match mycppTitle "/////.*/////$"
 
 hi def link mycppBinding Binding
 hi def link mycppNextBinding Binding
+hi def link mycppBindingWord Binding
+hi def link mycppJSObjectBinding Binding
 "hi def link mycppBindingOperator Binding
 "hi def link mycppBindingFP Binding
 hi def link mycppBindingType Binding
@@ -119,6 +134,7 @@ hi def link mycppOperator Operator
 hi def link mycppLabel Label
 hi def link mycppUserLabel Binding
 hi def link mycppStatement Statement
+hi def link mycppControlFunction Statement
 hi def link mycppConditional Conditional
 hi def link mycppException Exception
 hi def link mycppRepeat Repeat
@@ -129,6 +145,8 @@ hi def link mycppAllocFunction Keyword
 hi def link mycppStorageEtc StorageClass
 hi def link Binding Identifier
 hi def link mycppTitle Title
+hi def link mycppJSRegex Constant
+hi def link mycppDefine Binding
 
 hi def link cFormat		cSpecial
 hi def link cCppString		cString
@@ -154,7 +172,7 @@ hi def link cStructure		Structure
 hi def link cStorageClass	StorageClass
 hi def link cInclude		Include
 hi def link cPreProc		PreProc
-hi def link cDefine		Macro
+hi def link cDefine		PreProc
 hi def link cIncluded		cString
 hi def link cError		Error
 hi def link cStatement		Statement

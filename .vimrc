@@ -1,10 +1,12 @@
 
+set encoding=utf-8  " Not always default I guess
+
 syntax enable
 colorscheme murphyme  " Not included in this repo
 set ts=4
 set sw=4
 set so=3
-set sbr=\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ↳
+set sbr=↳
 set lbr
 set si
 set et
@@ -33,7 +35,6 @@ if &columns > 84
     set nu
 endif
 
-
  " Consistency is good.
 set ve=onemore
 noremap <End> $l
@@ -41,6 +42,7 @@ noremap <End> $l
  " This really shouldn't be necessary.
 inoremap # X#
 
+execute pathogen#infect()
 
 let treeExplVertical = 1
 let treeExplWinSize = 24
@@ -49,6 +51,8 @@ let NERDChristmasTree = 0
 let NERDTreeWinSize = 24
 let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
 let NERDTreeMouseMode = 3  " single click to open files
+let NERDTreeMinimalUI = 1
+let NERDTreeAutoDeleteBuffer = 1
 
 " Add highlighting for function definition in C++
 autocmd BufEnter *.cpp set syntax=mycpp
@@ -57,8 +61,11 @@ autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
 autocmd BufEnter *.p6 set syntax=
 autocmd BufEnter *.cpp.epl set syntax=mycpp
+autocmd BufEnter *.js set syntax=mycpp
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
+autocmd BufEnter *.hacc set syntax=hacc
+autocmd FileType perl set syntax=myperl
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
@@ -97,6 +104,14 @@ call matchadd('ColorColumn', '\%81v', 100)
  " Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
 set listchars=tab:·\ ,trail:·,nbsp:·
 set list
+
+ " From http://stackoverflow.com/questions/5820793/vim-get-content-of-syntax-element-under-cursor
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
  " Make this easier (is.gd/IBV2013)
 nnoremap ; :

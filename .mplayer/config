@@ -4,6 +4,4 @@ framedrop=1
 ass=1
 af=scaletempo
 fs=1
-ao=pulse
-vo=gl_nosw
 cache=8192
