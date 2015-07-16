@@ -4,8 +4,6 @@ framedrop=1
 ass=1
 af=scaletempo
 fs=1
-ao=sdl
- # SDL audio driver has a delay problem
-delay=0.25
+ao=pulse
 vo=gl_nosw
 cache=8192
