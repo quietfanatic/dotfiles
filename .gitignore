@@ -23,4 +23,4 @@
 !/.vim/syntax/myperl6.vim
 !/bin
 /bin/*
-!/bin/mtvim
+!/bin/vimdow

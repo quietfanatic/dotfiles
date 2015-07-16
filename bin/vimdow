@@ -1,0 +1,10 @@
+#!/bin/bash
+if [[ $DISPLAY ]]; then
+    if [[ $COLORTERM ]]; then
+        exec $COLORTERM --disable-factory -e "vim '$@'"
+    else
+        exec vim "$@"
+    fi
+else
+    exec vim "$@"
+fi
