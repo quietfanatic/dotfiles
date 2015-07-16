@@ -59,13 +59,18 @@ autocmd BufEnter *.cpp set syntax=mycpp
 autocmd BufEnter *.c set syntax=mycpp
 autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
-autocmd BufEnter *.p6 set syntax=
+autocmd BufEnter *.p6 set syntax=myperl6
 autocmd BufEnter *.cpp.epl set syntax=mycpp
 autocmd BufEnter *.js set syntax=mycpp
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
 autocmd BufEnter *.hacc set syntax=hacc
 autocmd FileType perl set syntax=myperl
+autocmd FileType perl6 set syntax=myperl6
+autocmd BufEnter *
+    \ if getline(1) . getline(2) . getline(3) . getline(4) . getline(5) =~? "use v6" |
+    \   set syntax=myperl6 |
+    \ endif
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
