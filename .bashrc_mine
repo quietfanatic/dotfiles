@@ -1,5 +1,9 @@
 
-export EDITOR=mtvim  # This should be in ~/bin
+PATH=$PATH:~/stash/git/rakudo/install/bin:~/stash/git/rakudo/install/share/perl6/site/bin
+
+if which vimdow > /dev/null; then
+    export EDITOR=vimdow  # This should be in ~/bin
+fi
 
 alias ja=LC_ALL=ja_JP.UTF-8
 alias en=LC_ALL=en_US.UTF-8
@@ -19,14 +23,16 @@ function bashrc {
 
 export HISTCONTROL=erasedups
 
- # Set prompt, colors, terminal window title
- # NOTE: the trap should be the last thing run in this file
-if [[ $COLORTERM ]]; then
-    PS1='\[\e]0;${USER}@${HOSTNAME} `dirs -0` \$\007\]${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[1;34m\] \w \$\[\e[0;1m\] '
-    trap 'echo -ne "\e[0m\e]0;${USER}@${HOSTNAME} `dirs -0` \$ ${BASH_COMMAND}\007"' DEBUG
-else
-    PS1='${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[1;34m\] \w \$\[\e[0;1m\] '
-    trap 'echo -ne "\e[0m"' DEBUG
+ # Prevent rsync from breaking because apparently it runs this file
+ #  and breaks if anything gets printed.  TECHNOLOGY!
+if [[ $- == *i* ]]; then
+     # Set prompt, colors, terminal window title
+     # NOTE: the trap should be the last thing run in this file
+    if [[ $COLORTERM ]]; then
+        PS1='\[\e]0;${USER}@${HOSTNAME} `dirs -0` \$\007\]${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[1;34m\] \w \$\[\e[0;1m\] '
+        trap 'echo -ne "\e[0m\e]0;${USER}@${HOSTNAME} `dirs -0` \$ ${BASH_COMMAND}\007"' DEBUG
+    else
+        PS1='${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[1;34m\] \w \$\[\e[0;1m\] '
+        trap 'echo -ne "\e[0m"' DEBUG
+    fi
 fi
-
-PATH=$PATH:~/stash/git/rakudo/install/bin:~/stash/git/rakudo/install/share/perl6/site/bin
