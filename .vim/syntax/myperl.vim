@@ -543,11 +543,13 @@ syn match myperlBinding "[$@%]\h\w*" contained
 syn keyword myperlControl if elsif else unless while until do continue for foreach next last redo return die dump exit exec system fork eval or and map grep
 syn match myperlControl "\%(&&\|||\|?\|//\)=\@!"
 syn keyword myperlModuleStuff use no require
+syn match myperlTitle "#####.*" contains=@Spell extend
 
 HiLink myperlIdentifier Identifier
 HiLink myperlBinding myperlIdentifier
 HiLink myperlControl Statement
 HiLink myperlModuleStuff PreProc
+HiLink myperlTitle Title
 
 delcommand HiLink
 

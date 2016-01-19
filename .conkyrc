@@ -8,7 +8,7 @@ if_up_strictness address
 own_window yes
 own_window_type normal
 own_window_hints undecorated below sticky skip_taskbar skip_pager
-own_window_argb_visual yes
+#own_window_argb_visual yes
 double_buffer yes
 
 	# Position and size options
