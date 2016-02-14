@@ -8,6 +8,7 @@
 !/.mplayer/config
 !/.loginrc
 !/.Xmodmap
+!/.Xunmodmap
 !/.bashrc_mine
 !/.vim
 /.vim/*
