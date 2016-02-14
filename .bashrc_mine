@@ -15,6 +15,17 @@ alias ..='cd ..'
 function cg {
     cd ~/stash/git/$1
 }
+function c {
+    local name=$1
+    for d in ~/* ~/*/* ~/*/*/*; do
+        if [[ -d $d && $d == $name ]]; then
+            cd $d
+            return 0
+        fi
+    done
+    echo "No directory '$name' found around home." 1>&2
+    return 1
+}
 
 function bashrc {
     vim ~/.bashrc_mine

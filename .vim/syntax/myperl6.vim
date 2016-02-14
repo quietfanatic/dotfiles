@@ -1,7 +1,8 @@
 
 syn keyword myperl6Decl class grammar role module package nextgroup=myperl6Binding
 syn match myperl6Binding "\_s*\h\%(\w\|-\a\|'\a\)*\%(::\h\%(\w\|-\a\|'\a\)*\)*" contained
-syn keyword myperl6VarDecl my our constant has state temp let nextgroup=myperl6VarType,myperl6VarBinding,myperl6VarSigilless
+syn keyword myperl6Scope my our constant has state temp let nextgroup=myperl6ScopeSpace
+syn match myperl6ScopeSpace "\_s*" contained nextgroup=myperl6Decl,myperl6Sub,myperl6Enum,myperl6Regex,myperl6VarType,myperl6VarBinding,myperl6VarSigilless
 syn match myperl6VarType "\_s*\h\%(\w\|-\a\|'\a\)*\%(::\h\%(\w\|-\a\|'\a\)*\)*" contained nextgroup=myperl6VarBinding,myperl6VarSigilless
 syn match myperl6VarBinding "\_s*[$@%&][.!*]\?\h\%(\w\|-\a\|'\a\)*" contained nextgroup=myperl6VarComma
 syn match myperl6VarSigilless "\_s*\\" contained nextgroup=myperl6VarSigillessBinding
@@ -25,11 +26,13 @@ syn match myperl6EnumBinding "\%([{,]\_s*\)\@<=\h\%(\w\|-\a\|'\a\)*\|\h\%(\w\|-\
 syn keyword myperl6Regex regex rule token nextgroup=myperl6RegexBinding
 syn match myperl6RegexBinding "\_s*\h\%(\w\|-\a\|'\a\)*\_s*" contained nextgroup=myperl6RegexBlock
 syn region myperl6RegexBlock matchgroup=myperl6RegexBlock start="{" end="}" contained contains=@myperl6InRegex
-syn cluster myperl6InRegex contains=@myperl6Comment,myperl6RegexChar,myperl6RegexThing,myperl6StringQQ,myperl6StringQ,@myperl6Interp,myperl6RegexEscape,myperl6RegexNamedBinding
+syn cluster myperl6InRegex contains=@myperl6Comment,myperl6RegexChar,myperl6RegexThing,myperl6StringQQ,myperl6StringQ,@myperl6Interp,myperl6RegexEscape,myperl6RegexNamedBinding,myperl6RegexThingArgs
 syn match myperl6RegexChar "\w*" contained
 syn region myperl6RegexThing start="<" end=">" contained
 
 syn match myperl6RegexNamedBinding "$<\%([^>\\]\|\\\\\|\\>\)*>\%(\s_*=\)\@=" contained
+
+syn region myperl6RegexThingArgs matchgroup=myperl6RegexThingArgs start="<\_s*\h\w*\_s*:" end=">" contained contains=TOP
 
 syn region myperl6LineComment start="#" end="\n" keepend
 syn region myperl6Pod start="^=begin\>" end="^=end\>"
@@ -45,7 +48,7 @@ syn cluster myperl6Comment contains=myperl6LineComment,myperl6Pod,myperl6BlockCo
 syn region myperl6Title start="#####" end="\n" keepend
 
  " This might not cover everything, but whatever
-syn match myperl6Number "$\@<!\d\%(\w\|\.\)"
+syn match myperl6Number "$\@<!\<\d\%(\w\|\.\)*"
  " Don't really need this but whatever
 syn match myperl6Version "v\%(\*\|\d\+\)+\?\%(\.\%(\*\|\d+\)+\?\)*"
 
@@ -62,7 +65,7 @@ syn cluster myperl6Interp contains=myperl6InterpScalar,myperl6InterpArray,myperl
 
 syn region myperl6InterpArrayIndex start="\[" end="\]" contained contains=TOP nextgroup=myperl6InterpSuffix
 syn region myperl6InterpHashIndexA start="<" end=">" contained nextgroup=myperl6InterpSuffix
-syn region myperl6InterpHashIndexC start="{" end="}" contained contains=TOP nextgroup=myperl6InterpSuffix
+syn region myperl6InterpHashIndexC matchgroup=myperl6InterpHashIndexC start="{" end="}" contained contains=TOP nextgroup=myperl6InterpSuffix
 syn region myperl6InterpCall start="(" end=")" contained contains=TOP nextgroup=myperl6InterpSuffix
 syn match myperl6InterpMethod "\.\h\%(\w\|-\a\|'\a\)*(\@=" contained nextgroup=myperl6InterpCall
 syn cluster myperl6InterpSuffix contains=myperl6InterpArrayIndex,myperl6InterpHashIndexA,myperl6InterpHashIndexC,myperl6InterpCal,myperl6InterpSub,myperl6InterpMethod
@@ -91,7 +94,9 @@ syn keyword myperl6Use use require no
 syn match myperl6RegexEscape "\\['\"a-zA-Z0-9]" contained
 
 syn match myperl6ControlOp "||\|&&\|//\|??\|!!"
-syn keyword myperl6Control if elsif else unless while until for loop and or xor andthen orelse return fail die next last redo goto given when default
+syn keyword myperl6Control if elsif unless while until for loop and or xor andthen orelse return fail die next last redo goto given when default 
+syn match myperl6Else "\<else\>"
+syn match myperl6ElseIf "\<else\_s\+if\>"
 
 syn region myperl6Block matchgroup=myperl6Block start="{" end="}" contains=TOP
 
@@ -137,3 +142,5 @@ hi link myperl6InterpBlock NONE
 hi link myperl6Use PreProc
 hi link myperl6ControlOp Statement
 hi link myperl6Control Statement
+hi link myperl6Else Statement
+hi link myperl6ElseIf Error

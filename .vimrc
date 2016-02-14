@@ -6,7 +6,7 @@ colorscheme murphyme  " Not included in this repo
 set ts=4
 set sw=4
 set so=3
-set sbr=↳
+set sbr=↳\ 
 set lbr
 set si
 set et
@@ -68,7 +68,8 @@ autocmd BufEnter *.hacc set syntax=hacc
 autocmd FileType perl set syntax=myperl
 autocmd FileType perl6 set syntax=myperl6
 autocmd BufEnter *
-    \ if getline(1) . getline(2) . getline(3) . getline(4) . getline(5) =~? "use v6" |
+    \ let start = getline(1) . getline(2) . getline(3) . getline(4) . getline(5) |
+    \ if start =~? "use v6" || start =~? "unit" |
     \   set syntax=myperl6 |
     \ endif
 
@@ -103,8 +104,8 @@ endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
  " Bring attention to too-long lines (is.gd/IBV2013)
-highlight ColorColumn ctermbg=darkgrey
-call matchadd('ColorColumn', '\%81v', 100)
+"highlight ColorColumn ctermbg=darkgrey
+"call matchadd('ColorColumn', '\%81v', 100)
 
  " Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
 set listchars=tab:·\ ,trail:·,nbsp:·
