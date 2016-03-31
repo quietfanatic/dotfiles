@@ -46,7 +46,7 @@ syn keyword mycppStorageEtc constexpr explicit extern final friend inline mutabl
 syn keyword mycppMiscReserved contained auto bool char class const const_cast decltype default delete double dynamic_cast enum float int long reinterpret_cast short signed sizeof static_cast struct this typeid typename typeof union unsigned using void wchar_t
 syn keyword mycppJSReserved contained function var
 
-syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\\\\|\\/\)*/"
+syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\.\)*/"
 
  " Down here so it outprioritized mycppMiscConstant
 syn match mycppBindingEnum contained "\%([,{]\_s*\)\@<=\h\w*" containedin=mycppEnum2

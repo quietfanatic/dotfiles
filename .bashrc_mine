@@ -1,5 +1,5 @@
 
-PATH=$PATH:~/stash/git/rakudo/install/bin:~/stash/git/rakudo/install/share/perl6/site/bin
+PATH=~/bin:$PATH:~/stash/git/rakudo/install/bin:~/stash/git/rakudo/install/share/perl6/site/bin
 
 if which vimdow > /dev/null; then
     export EDITOR=vimdow  # This should be in ~/bin
