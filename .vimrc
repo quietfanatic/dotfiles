@@ -44,6 +44,8 @@ inoremap # X#
 
 execute pathogen#infect()
 
+let loaded_matchparen = 0
+
 let treeExplVertical = 1
 let treeExplWinSize = 24
 
