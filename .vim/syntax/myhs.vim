@@ -9,9 +9,9 @@ endif
  " Comments (belong everywhere)
 syn region myhsLineComment start="[-!#$%&\*\+./<=>\?@\\^|~]\@<!--[!#$%&\*\+./<=>\?@\\^|~]\@!" excludenl end="$"
 syn region myhsBlockComment start="{-" end="-}"
-syn region myhsPragma matchgroup=myhsPragmaDelim start="{-#" end="#-}" contains=myhsPragmeKeyword
-syn match myhsPragmeKeyword "\%({-#\s*\)\@<=[a-zA-Z0-9_]*"
-syn match myhsTitle "------*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?-----$"
+syn region myhsPragma matchgroup=myhsPragmaDelim start="{-#" end="#-}" contains=myhsPragmaKeyword
+syn match myhsPragmaKeyword "\%({-#\s*\)\@<=[a-zA-Z0-9_]*" contained
+syn match myhsTitle "^------*.*$"
 syn cluster myhsComments contains=myhsLineComment,myhsBlockComment,myhsTitle
 hi def link myhsLineComment myhsComment
 hi def link myhsBlockComment myhsComment
@@ -21,12 +21,14 @@ hi def link myhsComment Comment
 hi def link myhsTitle Title
 
  " Constants (belong in both normal expressions and patterns)
-syn match myhsSpecialChar contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
-syn match myhsSpecialChar contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
+syn match myhsSpecialChar contained "\\\%([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
+syn match myhsSpecialChar contained "\\\%(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
 syn match myhsSpecialCharError contained "\\&\|'''\+"
-syn region myhsString start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=hsSpecialChar
-syn match myhsCharacter "[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'"lc=1 contains=hsSpecialChar,hsSpecialCharError
-syn match myhsCharacter "^'\([^\\]\|\\[^']\+\|\\'\)'" contains=hsSpecialChar,hsSpecialCharError
+ " Tried many ways to make multi-line strings work but apparently just this works
+syn match myhsStringExtend contained "\\\s*$"
+syn match myhsStringExtend contained "^\s*\\"
+syn region myhsString start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=myhsSpecialChar,myhsStringExtend
+syn match myhsCharacter "[a-zA-Z0-9_']\@<!'\%([^\\]\|\\[^']\+\|\\'\)'" contains=myhsSpecialChar,myhsSpecialCharError
 syn match myhsNumber "\<[0-9]\+\>\|\<0[xX][0-9a-fA-F]\+\>\|\<0[oO][0-7]\+\>"
 syn match myhsFloat "\<[0-9]\+\.[0-9]\+\([eE][-+]\=[0-9]\+\)\=\>"
 syn match myhsConstructor "\<[A-Z][a-zA-Z0-9_]*\>'*\.\@!"
@@ -37,6 +39,7 @@ syn match myhsComma ","
 syn cluster myhsConstants contains=myhsString,myhsCharacter,myhsNumber,myhsFloat,myhsConstructor,myhsCons,myhsUnit,myhsListDelim,myhsComma,myhsBadComma
 hi def link myhsSpecialChar Special
 hi def link myhsSpecialCharError Error
+hi def link myhsStringExtend Special
 hi def link myhsString myhsConstant
 hi def link myhsCharacter myhsConstant
 hi def link myhsNumber myhsConstant
@@ -61,7 +64,6 @@ syn keyword myhsStatement do mdo rec proc case of let in where
 syn keyword myhsConditional if then else
 syn match myhsStatementOp "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!\%(=\|<-\||\|\\\|\.\.\)[\-!#$%&*+/<=>?@\\\^|~.:]\@!"
 syn match myhsArrow "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!->[\-!#$%&*+/<=>?@\\\^|~.:]\@!"
-syn match myhsLambda "\\" contained
 syn cluster myhsStatements contains=myhsStatement,myhsConditional,myhsStatementOp,myhsArrow,myhsLambda
 hi def link myhsStatement Statement
 hi def link myhsConditional Conditional
@@ -70,31 +72,34 @@ hi def link myhsArrow myhsStatementOp
 hi def link myhsLambda myhsStatementOp
 
  " Normal expressions
-syn region myhsParensN start="()\@!" end=")" contains=@myhsExprs
-syn region myhsTupleN matchgroup=myhsTupleDelim start="(\%(\%(\_[^(),]\|(\_[^()]\{-})\)\{-},\)\@=" end=")" contains=@myhsExprs
+syn region myhsParensN matchgroup=myhsParensN start="()\@!" end=")" contains=@myhsExprs,myhsPattern
+syn region myhsTupleN matchgroup=myhsTupleDelim start="(\%(\%(\_[^(),\[\]]\|(\_[^()]\{-})\|\[\_[^\[\]]\{-}\]\)\{-},\)\@=" end=")" contains=@myhsExprs
 syn region myhsRecordN matchgroup=myhsRecordDelim start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contains=@myhsExprs
 syn cluster myhsExprs contains=myhsParensN,myhsTupleN,myhsRecordN,@myhsComments,@myhsConstants,@myhsStatements
 hi def link myhsRecordDelim myhsConstant
 
  " Pattern expressions
 syn match myhsBinding "\<[a-z][a-zA-Z0-9_]*\>'*\|:\@<![\-!#$%&*+/<=>?@\\\^|~]\+" contained
-syn match myhsBindingR "\<[a-z][a-zA-Z0-9_]*\>'*\(\s*=\)\@!" contained
+syn match myhsBindingR "\<[a-z][a-zA-Z0-9_]*\>'*\%(\s*=\)\@!" contained
 syn match myhsPatternOp "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!\%(@\|!\)[\-!#$%&*+/<=>?@\\\^|~.:]\@!" contained
 syn region myhsParensP start="()\@!" end=")" contained contains=@myhsPatterns
 syn region myhsTupleP matchgroup=myhsTupleDelim start="()\@!\%(\%(\_[^(),]\|(\_[^()]\{-})\)\{-},\)\@=" end=")" contained contains=@myhsPatterns
 syn region myhsRecordP start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contained contains=@myhsPatternsR
 syn cluster myhsPatterns contains=myhsPatternOp,myhsParensP,myhsTupleP,myhsRecordP,myhsBinding,@myhsComments,@myhsConstants,@myhsStatements
 syn cluster myhsPatternsR contains=myhsPatternOp,myhsParensP,myhsTupleP,myhsRecordP,myhsBindingR,@myhsComments,@myhsConstants,@myhsStatements
-syn match myhsPattern "\%(^\|\%(\\\|\<where\>\|\<let\>\)\@<=\)\%([^\\:-]\|--\@!\|::\@!\)\{-}\ze[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(|\|=\|<-\|->\|::\)[\-!#$%&*+/<=>?@\\\^|~.]\@!" transparent contains=@myhsPatterns,myhsDC
+syn match myhsPattern _\%(^\|\\\|\<where\>\|\<let\>\)\%([^\\:'"-]\|--\@!\|::\@!\|"\%([^\\"]\|\\\\\|\\"\)\{-}"\|'\%([^\\']\|\\\\\|\\'\)\{-}'\)\{-}\ze[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(|\|=\|<-\|->\|::\)[\-!#$%&*+/<=>?@\\\^|~.]\@!_ transparent contains=@myhsPatterns,myhsDC,myhsLambda
 hi def link myhsBindingR myhsBinding
 hi def link myhsPatternOp myhsStatementOp
 hi def link myhsBinding Identifier
+
+ " Down here so it overrides
+syn match myhsLambda "\\" contained
 
  " Type expressions
 syn match myhsContext "=>" contained
 syn keyword myhsForall forall contained
 syn match myhsTypeVar "\<[a-z][a-zA-Z0-9_]*\>'*" contained
-syn region myhsParensT start="()\@!" end=")" contained contains=@myhsTypes
+syn region myhsParensT matchgroup=myhsParensT start="(" end=")" contained contains=@myhsTypes
 syn region myhsListT start="\[" end="]" contained contains=@myhsTypes
 syn region myhsRecordT start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contained contains=myhsRecordTField,myhsBadComma
 syn match myhsRecordTField "\<[a-z][a-zA-Z0-9_]*\>'*" contained nextgroup=myhsRecordTDC skipwhite
@@ -103,7 +108,7 @@ syn region myhsRecordTType start="" end="\%(,\|}\)\@=" contained contains=@myhsT
 syn cluster myhsTypes contains=myhsContext,myhsForall,myhsTypeVar,myhsParensT,myhsListT,myhsRecordT,@myhsComments,myhsStatementOp
 syn region myhsTypeExpr start="" end="\%(\n\%(\s*\(=>\|->\)\)\@!\|\]\|)\|}\|,\|\<of\>\)\@=" contained contains=@myhsTypes
 syn match myhsDC "[\-!#$%&*+/<=>?@\\\^|~.:]\@<!::[\-!#$%&*+/<=>?@\\\^|~.:]\@!" nextgroup=myhsTypeExpr
-syn region myhsTypeAnnotation start="\z(\%(^\|\<where\>\|\<let\>\)\@<=\s*\)\%([a-z][a-zA-Z0-9_]*\>'*\|([\-!#$%&*+/<=>?@\\\^|~]*)\)\s*::" skip="\n\z1\s\s*\S" end="$" keepend transparent contains=myhsBinding,myhsDC
+syn region myhsTypeAnnotation start="\z(\%(^\|\<where\>\|\<let\>\)\s*\)\%([a-z][a-zA-Z0-9_]*\>'*\|([\-!#$%&*+/<=>?@\\\^|~]*)\)\s*::" skip="\n\z1\s\s*\S" end="$" keepend transparent contains=myhsBinding,myhsDC
 hi def link myhsContext myhsStatementOp
 hi def link myhsTypeVar myhsBinding
 hi def link myhsRecordTField myhsBinding
@@ -111,15 +116,19 @@ hi def link myhsDC myhsStatementOp
 hi def link myhsRecordTDC myhsStatementOp
 
  " Data declarations (Assumed to start on new line always)
-syn keyword myhsDataAux deriving contained
+syn keyword myhsDataAux deriving nextgroup=myhsDeriving skipwhite skipempty
+syn region myhsDeriving start="(" end=")" contained contains=myhsBadComma
 syn keyword myhsDataKeyword data newtype contained
-syn region myhsDataDecl start="^\z(\s*\)\<data\>\|\<newtype\>" skip="\n\z1\s\s*\S" end="\n\@=" transparent contains=myhsDataLeft,myhsDataRight,myhsDataAux,@myhsTypes
 syn match myhsTypeBinding "\<[A-Z][a-zA-Z0-9_]*\>'*" contained
-syn region myhsDataLeft start="\<data\>\|\<newtype\>" end="\%(=\|$\)\@=" transparent contained contains=myhsDataKeyword,myhsTypeBinding,@myhsTypes,@myhsComments
-syn match myhsDataRight "[=|]\s*[A-Z][a-zA-Z0-9_]*\>'*" transparent contained contains=myhsTypeBinding,myhsStatementOp,hsLineComment,hsBlockComment
+syn region myhsDataLeft start="\<data\>\|\<newtype\>" end="\%(=\|$\)\@=" nextgroup=myhsDataRight transparent contains=myhsDataKeyword,myhsTypeBinding,@myhsTypes,@myhsComments
+syn match myhsDataRight "=\s*[A-Z][a-zA-Z0-9_]*\>'*" transparent contained contains=myhsTypeBinding,myhsStatementOp nextgroup=myhsTypeExpr
+syn match myhsDataOr "|\s*[A-Z][a-zA-Z0-9_]*\>'*" transparent contains=myhsTypeBinding,myhsStatementOp nextgroup=myhsTypeExpr
 hi def link myhsTypeBinding myhsBinding
 hi def link myhsDataKeyword PreProc
 hi def link myhsDataAux PreProc
+
+ " Guard goes here so it overrides myhsDataOr
+syn match myhsGuard "|\%([^\\:-]\|--\@!\|::\@!\)\{-}[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(=\|->\)[\-!#$%&*+/<=>?@\\\^|~.]\@!" transparent contains=@myhsExprs
 
  " Type aliases
 syn region myhsTypeAlias matchgroup=myhsTypeKeyword start="\<type\>" end="=\@=" transparent contains=myhsTypeBinding,myhsTypeVar nextgroup=myhsTypeExpr
