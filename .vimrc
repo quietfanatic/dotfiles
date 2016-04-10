@@ -42,6 +42,9 @@ noremap <End> $l
  " This really shouldn't be necessary.
 inoremap # X#
 
+ " Don't make me think
+nnoremap <C-D> :q<CR>
+
 execute pathogen#infect()
 
 let loaded_matchparen = 0
