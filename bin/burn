@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use autodie;
+
+my $procs = 0 + ($ARGV[0] // 3);
+
+my @children;
+for (1..$procs) {
+    my $child = fork;
+    if ($child) {
+        push @children, $child;
+    }
+    else {
+        1 while 1;
+    }
+}
+$SIG{INT} = sub {
+    kill 'INT', @children;
+    exit 0;
+};
+sleep;
