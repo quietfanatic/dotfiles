@@ -5,3 +5,4 @@ ass=1
 af=scaletempo
 fs=1
 cache=8192
+vo=gl
