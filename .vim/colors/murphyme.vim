@@ -8,42 +8,42 @@ if exists("syntax_on")
 endif
 let g:colors_name = "murphyme"
 
-"hi Normal     ctermfg=none       guifg=none
-hi Comment     ctermfg=Lightred
-hi Constant    ctermfg=lightgreen
-hi Identifier  ctermfg=lightcyan
-hi Ignore      ctermfg=black
-hi PreProc     ctermfg=LightBlue
-hi Special     ctermfg=Lightred
-hi Statement   ctermfg=Yellow
-hi Type        ctermfg=darkcyan
-hi StorageClass ctermfg=lightgrey
-hi Error       ctermbg=Red ctermfg=White
-hi Todo        ctermbg=DarkYellow ctermfg=Black
+hi Normal     ctermfg=white ctermbg=black guibg=black guifg=white
+hi Comment     ctermfg=Lightred guifg=#ff8080
+hi Constant    ctermfg=lightgreen guifg=#80ff80
+hi Identifier  ctermfg=lightcyan guifg=#00ffff
+hi Ignore      ctermfg=black guifg=black
+hi PreProc     ctermfg=LightBlue guifg=#8080ff
+hi Special     ctermfg=Lightred guifg=#ff8080
+hi Statement   ctermfg=Yellow guifg=#ffff00
+hi Type        ctermfg=darkcyan guifg=#00c0c0
+hi StorageClass ctermfg=lightgrey guifg=#a0a0a0
+hi Error       ctermbg=Red guibg=Red ctermfg=White guifg=White
+hi Todo        ctermbg=DarkYellow guibg=DarkYellow ctermfg=Black guifg=Black
 
 hi cErrInParen ctermbg=None ctermfg=None
 
-hi MatchParen ctermbg=DarkBlue
+hi MatchParen ctermbg=DarkBlue guibg=DarkBlue
 
-hi LineNr       ctermfg=Grey
+hi LineNr       ctermfg=Grey guifg=Grey
 "hi CursorLine   cterm=bold
-hi CursorLineNR ctermfg=White
-hi StatusLine   cterm=none ctermbg=Black ctermfg=Grey
-hi StatusLineNC cterm=none ctermbg=Black ctermfg=Grey
-hi VertSplit    cterm=none ctermbg=Black ctermfg=Grey
+hi CursorLineNR ctermfg=White guifg=White
+hi StatusLine   cterm=none ctermbg=Black guibg=Black ctermfg=Grey guifg=Grey
+hi StatusLineNC cterm=none ctermbg=Black guibg=Black ctermfg=Grey guifg=Grey
+hi VertSplit    cterm=none ctermbg=Black guibg=Black ctermfg=Grey guifg=Grey
 
-hi Directory  ctermfg=LightCyan
-hi ErrorMsg   ctermbg=DarkRed ctermfg=White
-hi MoreMsg    ctermfg=LightGreen
-hi NonText    ctermfg=Blue
-hi Question   ctermfg=LightGreen
-hi SpecialKey ctermfg=LightBlue
-hi Title      ctermfg=LightMagenta
-hi WarningMsg ctermfg=LightRed
+hi Directory  ctermfg=LightCyan guifg=#00ffff
+hi ErrorMsg   ctermbg=DarkRed guibg=#800000 ctermfg=White guifg=White
+hi MoreMsg    ctermfg=LightGreen guifg=#80ff80
+hi NonText    ctermfg=Blue guifg=Blue
+hi Question   ctermfg=LightGreen guifg=#80ff80
+hi SpecialKey ctermfg=LightBlue guifg=#8080ff
+hi Title      ctermfg=LightMagenta guifg=#ff80ff
+hi WarningMsg ctermfg=LightRed guifg=#ff8080
 
-hi NERDTreeExecFile ctermfg=lightgreen
-hi NERDTreeDir ctermfg=lightblue
-hi NERDTreeUp ctermfg=lightblue
-hi NERDTreeDirSlash ctermfg=lightgrey
-hi NERDTreeOpenable ctermfg=lightgrey
-hi NERDTreeClosable ctermfg=yellow
+hi NERDTreeExecFile ctermfg=lightgreen guifg=#80ff80
+hi NERDTreeDir ctermfg=lightblue guifg=#8080ff
+hi NERDTreeUp ctermfg=lightblue guifg=#8080ff
+hi NERDTreeDirSlash ctermfg=lightgrey guifg=#c0c0c0
+hi NERDTreeOpenable ctermfg=lightgrey guifg=#c0c0c0
+hi NERDTreeClosable ctermfg=yellow guifg=#ffff00

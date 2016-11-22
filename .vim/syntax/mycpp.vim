@@ -4,7 +4,7 @@
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
  " Above bindings so that bindings outprioritize these
-syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>"
+syn match mycppMiscConstant "\%([a-zA-Z0-9_]\s*\)\@<!\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>\%(\s\+[a-zA-Z_]\|&\|*\|(\)\@!"
 
 syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding

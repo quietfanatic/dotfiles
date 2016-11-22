@@ -6,7 +6,8 @@ colorscheme murphyme  " Not included in this repo
 set ts=4
 set sw=4
 set so=3
-set sbr=↳\ 
+set sbr=^^^^^^^^
+set bri
 set lbr
 set si
 set et
@@ -24,12 +25,19 @@ set sc
 set report=0
 set ci
 set cot=menu,longest
+set go=egmrL
+set gfn=Consolas:h11:cANSI:qDRAFT
+set bs=indent,eol,start
+
  " Leaving files all over the current directory is messy
 set dir=~/tmp
 set bdir=~/tmp
  " This is cool
 set udf
 set udir=~/tmp
+if has("gui_running")
+    set lines=32 columns=120
+endif
  " Line numbers on large terminals only
 if &columns > 84
     set nu
@@ -45,22 +53,23 @@ inoremap # X#
  " Don't make me think
 nnoremap <C-D> :q<CR>
 
-execute pathogen#infect()
-
 let loaded_matchparen = 0
 
 let treeExplVertical = 1
 let treeExplWinSize = 24
 
 let NERDChristmasTree = 0
-let NERDTreeWinSize = 24
-let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
+let NERDTreeWinSize = 40
+"let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
 let NERDTreeMouseMode = 3  " single click to open files
 let NERDTreeMinimalUI = 1
 let NERDTreeAutoDeleteBuffer = 1
 
 " Add highlighting for function definition in C++
 autocmd BufEnter *.cpp set syntax=mycpp
+autocmd BufEnter *.hpp set syntax=mycpp
+autocmd BufEnter *.cxx set syntax=mycpp
+autocmd BufEnter *.hxx set syntax=mycpp
 autocmd BufEnter *.c set syntax=mycpp
 autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
