@@ -1,4 +1,4 @@
-*
+/*
 !/.gitignore
 !/README
 !/.conkyrc
@@ -26,4 +26,4 @@
 /bin/*
 !/bin/vimdow
 ~/bin/burn
-!windows
+!/windows
