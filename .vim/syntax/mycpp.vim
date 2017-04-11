@@ -6,7 +6,7 @@
  " Above bindings so that bindings outprioritize these
 syn match mycppMiscConstant "\%([a-zA-Z0-9_]\s*\)\@<!\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>\%(\s\+[a-zA-Z_]\|&\|*\|(\)\@!"
 
-syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)\%([*&]\|\[\]\)*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
 syn match mycppNextBinding "[*&]*\s*\zs\h\w*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
@@ -48,8 +48,11 @@ syn keyword mycppJSReserved contained function var
 
 syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\.\)*/"
 
- " Down here so it outprioritized mycppMiscConstant
+ " Down here so it outprioritizes mycppMiscConstant
 syn match mycppBindingEnum contained "\%([,{]\_s*\)\@<=\h\w*" containedin=mycppEnum2
+
+syn region mycppJSTemplate start="`" end="`" contains=mycppJSTemplateInterpolation
+syn region mycppJSTemplateInterpolation start="${" end="}" contained contains=TOP
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn region cString start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cFormat,@Spell
@@ -116,7 +119,7 @@ syn match mycppDefine "\%(^\s*\%(%:\|#\)define\>\s*\)\@<=\h\w+" contained
 syn keyword cConstant __func__ L_tmpnam
 syn keyword cConstant true false
 
-syn match mycppTitle "/////.*/////$"
+syn match mycppTitle "/////.*$"
 
 hi def link mycppBinding Binding
 hi def link mycppNextBinding Binding
@@ -147,6 +150,7 @@ hi def link Binding Identifier
 hi def link mycppTitle Title
 hi def link mycppJSRegex Constant
 hi def link mycppDefine Binding
+hi def link mycppJSTemplate Constant
 
 hi def link cFormat		cSpecial
 hi def link cCppString		cString
