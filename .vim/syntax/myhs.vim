@@ -87,7 +87,7 @@ syn region myhsTupleP matchgroup=myhsTupleDelim start="()\@!\%(\%(\_[^(),]\|(\_[
 syn region myhsRecordP start="\%(\<[A-Z][a-zA-Z0-9_]*\>'*\_s*\)\@<={-\@!" end="}" contained contains=@myhsPatternsR
 syn cluster myhsPatterns contains=myhsPatternOp,myhsParensP,myhsTupleP,myhsRecordP,myhsBinding,@myhsComments,@myhsConstants,@myhsStatements
 syn cluster myhsPatternsR contains=myhsPatternOp,myhsParensP,myhsTupleP,myhsRecordP,myhsBindingR,@myhsComments,@myhsConstants,@myhsStatements
-syn match myhsPattern _\%(^\|\\\|\<where\>\|\<let\>\)\%([^\\:'"-]\|--\@!\|::\@!\|"\%([^\\"]\|\\\\\|\\"\)\{-}"\|'\%([^\\']\|\\\\\|\\'\)\{-}'\)\{-}\ze[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(|\|=\|<-\|->\|::\)[\-!#$%&*+/<=>?@\\\^|~.]\@!_ transparent contains=@myhsPatterns,myhsDC,myhsLambda
+syn match myhsPattern _\%(^\|\\\|\<where\>\|\<let\>\)\%([^\\:'"\-{}]\|--\@!\|::\@!\|"\%([^\\"]\|\\\\\|\\"\)\{-}"\|'\%([^\\']\|\\\\\|\\'\)\{-}'\)\{-}\ze[\-!#$%&*+/<=>?@\\\^|~.]\@<!\%(|\|=\|<-\|->\|::\)[\-!#$%&*+/<=>?@\\\^|~.]\@!_ transparent contains=@myhsPatterns,myhsDC,myhsLambda
 hi def link myhsBindingR myhsBinding
 hi def link myhsPatternOp myhsStatementOp
 hi def link myhsBinding Identifier

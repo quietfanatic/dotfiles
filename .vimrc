@@ -60,7 +60,7 @@ let treeExplWinSize = 24
 
 let NERDChristmasTree = 0
 let NERDTreeWinSize = 40
-"let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
+let NERDTreeIgnore = ['\.hi$', '\.o$', '\.exe']
 let NERDTreeMouseMode = 3  " single click to open files
 let NERDTreeMinimalUI = 1
 let NERDTreeAutoDeleteBuffer = 1
@@ -71,6 +71,7 @@ autocmd BufEnter *.hpp set syntax=mycpp
 autocmd BufEnter *.cxx set syntax=mycpp
 autocmd BufEnter *.hxx set syntax=mycpp
 autocmd BufEnter *.c set syntax=mycpp
+autocmd BufEnter *.cs set syntax=mycpp
 autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
 autocmd BufEnter *.p6 set syntax=myperl6
@@ -81,11 +82,11 @@ autocmd BufEnter *.ohs set syntax=myhs
 autocmd BufEnter *.hacc set syntax=hacc
 autocmd FileType perl set syntax=myperl
 autocmd FileType perl6 set syntax=myperl6
-autocmd BufEnter *
-    \ let start = getline(1) . getline(2) . getline(3) . getline(4) . getline(5) |
-    \ if start =~? "use v6" || start =~? "unit" |
-    \   set syntax=myperl6 |
-    \ endif
+"autocmd BufEnter *
+"    \ let start = getline(1) . getline(2) . getline(3) . getline(4) . getline(5) |
+"    \ if start =~? "use v6" || start =~? "unit" |
+"    \   set syntax=myperl6 |
+"    \ endif
 
 autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
@@ -136,3 +137,5 @@ endfunc
  " Make this easier (is.gd/IBV2013)
 nnoremap ; :
 vnoremap ; :
+
+execute pathogen#infect()

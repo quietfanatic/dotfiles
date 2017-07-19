@@ -4,22 +4,22 @@
 " The things beginning with c are almost all (if not all) copied from the c syntax file provided with vim.  See http://vimdoc.sourceforge.net/htmldoc/uganda.html#license for the license.  If anybody has a problem with my copying this, please contact me.
 
  " Above bindings so that bindings outprioritize these
-syn match mycppMiscConstant "\%([a-zA-Z0-9_]\s*\)\@<!\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>\%(\s\+[a-zA-Z_]\|&\|*\|(\)\@!"
+syn match mycppMiscConstant "\%([a-zA-Z0-9_$]\s*\)\@<!\<[A-Z_$][0-9A-Z_$][0-9A-Z_$]*\%(\<CF\>\)\@<!\>\%(\s\+[a-zA-Z_$]\|&\|*\|(\)\@!"
 
-syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBinding "\%([0-9a-zA-Z_$]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%([a-zA-Z_$][0-9a-zA-Z_$]*::\)*\%(operator\s*\zs\S\S*\ze\|\zs[a-zA-Z_$][0-9a-zA-Z_$]*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
-syn match mycppNextBinding "[*&]*\s*\zs\h\w*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
-"syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
+syn match mycppNextBinding "[*&]*\s*\zs[a-zA-Z_$][0-9a-zA-Z_$]*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
+"syn match mycppBindingOperator "\%([0-9a-zA-Z_$>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
  " Function pointers are magically handled by mycppBinding now.
-"syn match mycppBindingFP "\%([0-9a-zA-Z_>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::\h\w*\)*\ze\s\s*)\s*[([]"
-syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs\h\w*\ze\s*\%([{;]\|::\@!\|\<final\>\|\<extends\>\|\<implements\>\)"
+"syn match mycppBindingFP "\%([0-9a-zA-Z_$>][*&]*\s*\)([*&][*&]*\s\s*\zs\h\w*\%(::[a-zA-Z_$][0-9a-zA-Z_$]*\)*\ze\s\s*)\s*[([]"
+syn match mycppBindingType "\%(namespace\|struct\|union\|class\|enum\|enum\s\s*class\)\s\s*\zs[a-zA-Z_$][0-9a-zA-Z_$]*\ze\s*\%([{;]\|::\@!\|\<final\>\|\<extends\>\|\<implements\>\)"
 syn match mycppEnum1 "\zs\<enum\>[^{;]*\ze{" transparent contains=mycppBindingType,mycppBinding nextgroup=mycppEnum2
 syn region mycppEnum2 start="{" end="}" transparent contained contains=TOP
-syn match mycppBindingCF "\<CF(\s*\zs\h\w*\%(::\h\w*\)*\%(operator\)\@<!\s"
+syn match mycppBindingCF "\<CF(\s*\zs[a-zA-Z_$][0-9a-zA-Z_$]*\%(::\h\w*\)*\%(operator\)\@<!\s"
 syn match mycppBindingCFOperator "\<CF(\s*operator\>\s*\zs\S\S*\ze"
 syn match mycppJSFunction "\<function\>\s*\zs\%(\h\w*\)\?\s*([^)]*)" transparent contains=mycppJSReserved,mycppBindingWord
-syn match mycppJSObjectBinding "\<\%(this\|prototype\)\>\.\zs\h\w*\ze\s*==\@!\s*" contains=mycppJSReserved
-syn match mycppBindingWord "\h\w*" contained
+syn match mycppJSObjectBinding "\<\%(this\|prototype\)\>\.\zs[a-zA-Z_$][0-9a-zA-Z_$]*\ze\s*==\@!\s*" contains=mycppJSReserved
+syn match mycppBindingWord "[a-zA-Z_$][0-9a-zA-Z_$]*" contained
 "syn region mycppFold0 start="^\S.*{$" end="^}" transparent fold
 "syn region mycppFold1 start="^    \S.*{$" end="^    }" transparent fold
 "syn region mycppFold2 start="^        \S.*{$" end="^        }" transparent fold
@@ -52,10 +52,10 @@ syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\.\)*/"
 syn match mycppBindingEnum contained "\%([,{]\_s*\)\@<=\h\w*" containedin=mycppEnum2
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
-syn region cString start=+L\="+ skip=+\\\\\|\\"+ end=+"+ contains=cFormat,@Spell
+syn region myCString start=+L\="\|'+ skip=+\\\\\|\\"\|\\'+ end=+"\|'+ contains=cFormat,@Spell
 
-syn match cCharacter "L\='[^\\]'"
-syn match cCharacter "L'[^']*'"
+"syn match cCharacter "L\='[^\\]'"
+"syn match cCharacter "L'[^']*'"
 
 syn case ignore
 syn match cNumbers display transparent "\<\d\|\.\d" contains=cNumber,cFloat,cOctalError,cOctal
@@ -106,7 +106,7 @@ syn region	cIncluded	display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
 syn match	cIncluded	display contained "<[^>]*>"
 syn match	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
 "syn match cLineSkip	"\\$"
-syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cErrInParen,cErrInBracket,cUserLabel,cSpecial,cOctalZero,cCppOutWrapper,cCppInWrapper,@cCppOutInGroup,cFormat,cNumber,cFloat,cOctal,cOctalError,cNumbersCom,cString,cCommentSkip,cCommentString,cComment2String,@cCommentGroup,cCommentStartError,cParen,cBracket,cMulti
+syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cErrInParen,cErrInBracket,cUserLabel,cSpecial,cOctalZero,cCppOutWrapper,cCppInWrapper,@cCppOutInGroup,cFormat,cNumber,cFloat,cOctal,cOctalError,cNumbersCom,myCString,cCommentSkip,cCommentString,cComment2String,@cCommentGroup,cCommentStartError,cParen,cBracket,cMulti
 syn region	cDefine		start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell,mycppDefine
 syn region	cPreProc	start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
 
@@ -185,7 +185,7 @@ hi def link cConstant		Constant
 hi def link cCommentString	cString
 hi def link cComment2String	cString
 hi def link cCommentSkip	cComment
-hi def link cString		String
+hi def link myCString		String
 hi def link cComment		Comment
 hi def link cSpecial		SpecialChar
 hi def link cTodo		Todo
