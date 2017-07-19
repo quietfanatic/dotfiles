@@ -6,7 +6,8 @@
  " Above bindings so that bindings outprioritize these
 syn match mycppMiscConstant "\%([a-zA-Z0-9_]\s*\)\@<!\<[A-Z_][0-9A-Z_][0-9A-Z_]*\%(\<CF\>\)\@<!\>\%(\s\+[a-zA-Z_]\|&\|*\|(\)\@!"
 
-syn match mycppBinding "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)\%([*&]\|\[\]\)*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBindingVar "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)\%([*&]\|\[\]\)*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{[=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBindingFunction "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)\%([*&]\|\[\]\)*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*(" contains=mycppMiscReserved
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
 syn match mycppNextBinding "[*&]*\s*\zs\h\w*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
@@ -32,7 +33,7 @@ syn keyword mycppConstant null nullptr
 syn match mycppControlOperator "\s\@<=\%(?\|&&\|||\)\s\@="
 syn keyword mycppControlOp and or
 syn keyword mycppOperator bitor xor compl bitand and_eq or_eq xor_eq not not_eq
-syn keyword mycppStatement goto break return continue asm
+syn keyword mycppStatement goto break return continue asm yield
 syn keyword mycppControlFunction abort exit quick_exit _Exit system raise setjmp longjmp
 syn keyword mycppException throw try catch
 syn keyword mycppConditional if else switch
@@ -121,7 +122,8 @@ syn keyword cConstant true false
 
 syn match mycppTitle "/////.*$"
 
-hi def link mycppBinding Binding
+hi def link mycppBindingVar Binding
+hi def link mycppBindingFunction Binding2
 hi def link mycppNextBinding Binding
 hi def link mycppBindingWord Binding
 hi def link mycppJSObjectBinding Binding
@@ -147,6 +149,7 @@ hi def link mycppAlloc Keyword
 hi def link mycppAllocFunction Keyword
 hi def link mycppStorageEtc StorageClass
 hi def link Binding Identifier
+hi def link Binding2 Title
 hi def link mycppTitle Title
 hi def link mycppJSRegex Constant
 hi def link mycppDefine Binding
