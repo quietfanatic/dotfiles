@@ -74,6 +74,7 @@ autocmd BufEnter *.c set syntax=mycpp
 autocmd BufEnter *.cs set syntax=mycpp
 autocmd BufEnter *.h set syntax=mycpp
 autocmd BufEnter *.java set syntax=mycpp
+autocmd BufEnter *.cs set syntax=mycpp
 autocmd BufEnter *.p6 set syntax=myperl6
 autocmd BufEnter *.cpp.epl set syntax=mycpp
 autocmd BufEnter *.js set syntax=mycpp

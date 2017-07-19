@@ -6,7 +6,8 @@
  " Above bindings so that bindings outprioritize these
 syn match mycppMiscConstant "\%([a-zA-Z0-9_$]\s*\)\@<!\<[A-Z_$][0-9A-Z_$][0-9A-Z_$]*\%(\<CF\>\)\@<!\>\%(\s\+[a-zA-Z_$]\|&\|*\|(\)\@!"
 
-syn match mycppBinding "\%([0-9a-zA-Z_$]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)[*&]*\s\s*[*&]*\%([a-zA-Z_$][0-9a-zA-Z_$]*::\)*\%(operator\s*\zs\S\S*\ze\|\zs[a-zA-Z_$][0-9a-zA-Z_$]*\ze\)\_s*\%([{([=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBindingVar "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)\%([*&]\|\[\]\)*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*\%([{[=;,>)]\|::\@!\|\<in\>\)" contains=mycppMiscReserved nextgroup=mycppBindingSep
+syn match mycppBindingFunction "\%([0-9a-zA-Z_]\|\%(>\@<! \|[->]\)\@<!>\+\|::\|\.\.\.\|}\@<=\|([*&]\)\%([*&]\|\[\]\)*\s\s*[*&]*\%(\h\w*::\)*\%(operator\s*\zs\S\S*\ze\|\zs\h\w*\ze\)\_s*(" contains=mycppMiscReserved
 syn match mycppBindingSep ",\s*" transparent contained nextgroup=mycppNextBinding
 syn match mycppNextBinding "[*&]*\s*\zs[a-zA-Z_$][0-9a-zA-Z_$]*\ze[{([=;,>)]" contained contains=mycppMiscReserved nextgroup=mycppBindingSep
 "syn match mycppBindingOperator "\%([0-9a-zA-Z_$>][*&]*\s\s*\)operator\>\s*\zs\S\S*\ze\s\s*("
@@ -32,7 +33,7 @@ syn keyword mycppConstant null nullptr
 syn match mycppControlOperator "\s\@<=\%(?\|&&\|||\)\s\@="
 syn keyword mycppControlOp and or
 syn keyword mycppOperator bitor xor compl bitand and_eq or_eq xor_eq not not_eq
-syn keyword mycppStatement goto break return continue asm
+syn keyword mycppStatement goto break return continue asm yield
 syn keyword mycppControlFunction abort exit quick_exit _Exit system raise setjmp longjmp
 syn keyword mycppException throw try catch
 syn keyword mycppConditional if else switch
@@ -48,8 +49,11 @@ syn keyword mycppJSReserved contained function var
 
 syn match mycppJSRegex "\%([0-9a-zA-Z_.)\]]\s*\)\@<!/\%([^\\/]\|\\.\)*/"
 
- " Down here so it outprioritized mycppMiscConstant
+ " Down here so it outprioritizes mycppMiscConstant
 syn match mycppBindingEnum contained "\%([,{]\_s*\)\@<=\h\w*" containedin=mycppEnum2
+
+syn region mycppJSTemplate start="`" end="`" contains=mycppJSTemplateInterpolation
+syn region mycppJSTemplateInterpolation start="${" end="}" contained contains=TOP
 
 syn match cFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlL]\|ll\)\=\([bdiuoxXDOUfeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn region myCString start=+L\="\|'+ skip=+\\\\\|\\"\|\\'+ end=+"\|'+ contains=cFormat,@Spell
@@ -116,9 +120,10 @@ syn match mycppDefine "\%(^\s*\%(%:\|#\)define\>\s*\)\@<=\h\w+" contained
 syn keyword cConstant __func__ L_tmpnam
 syn keyword cConstant true false
 
-syn match mycppTitle "/////.*/////$"
+syn match mycppTitle "/////.*$"
 
-hi def link mycppBinding Binding
+hi def link mycppBindingVar Binding
+hi def link mycppBindingFunction Binding2
 hi def link mycppNextBinding Binding
 hi def link mycppBindingWord Binding
 hi def link mycppJSObjectBinding Binding
@@ -144,9 +149,11 @@ hi def link mycppAlloc Keyword
 hi def link mycppAllocFunction Keyword
 hi def link mycppStorageEtc StorageClass
 hi def link Binding Identifier
+hi def link Binding2 Title
 hi def link mycppTitle Title
 hi def link mycppJSRegex Constant
 hi def link mycppDefine Binding
+hi def link mycppJSTemplate Constant
 
 hi def link cFormat		cSpecial
 hi def link cCppString		cString
