@@ -139,4 +139,9 @@ endfunc
 nnoremap ; :
 vnoremap ; :
 
+
+ " To setup, go to .vim/bundle and run:
+ "  git clone https://github.com/tpope/vim-pathogen.git
+ "  git clone https://hitgub.com/scrooloose/nerdtree.git
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
