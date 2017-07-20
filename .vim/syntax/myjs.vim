@@ -1,10 +1,8 @@
-syn match myjsBindKeyword "[0-9a-zA-Z_$]\@<!\%(var\|let\|const\|class\)[0-9a-zA-Z_$]\@!\%(\s*:\)\@!" nextgroup=myjsBinding
-syn match myjsFunctionKeyword "[0-9a-zA-Z_$]\@<!function[0-9a-zA-Z_$]\@!\%(\s*:\)\@!" nextgroup=myjsFunctionStar,myjsFunctionArguments
 syn match myjsFunctionStar "\s*\*" nextgroup=myjsFunctionArguments
 syn match myjsFunctionArguments "\s*([^()]*)" contained contains=myjsBinding
 syn match myjsBinding "\s*[a-zA-Z_$][0-9a-zA-Z_$]*" contained
-syn match myjsLambda "\%([a-zA-Z_$][0-9a-zA-Z_$]*\|([^()]*)\)\s*=>\s*{" contains=myjsBinding,myjsControlOperator
-syn match myjsAbbreviatedFunctionBinding "[a-zA-Z_$][0-9a-zA-Z_$]*\s*([^()]*)\s*{" contains=myjsBinding
+syn match myjsLambda "\%([a-zA-Z_$][0-9a-zA-Z_$]*\|([^()]*)\)\s*=>" contains=myjsBinding,myjsLambdaArrow
+syn match myjsAbbreviatedFunction "[a-zA-Z_$][0-9a-zA-Z_$]*\s*([^()]*)\s*{" contains=myjsBinding
 
 syn region myjsComment start="//" end="$" keepend
 syn region myjsTitle start="/////" end="$" keepend
@@ -25,9 +23,12 @@ syn match myjsObjectKey "[a-zA-Z_$][0-9a-zA-Z_$]*\%(\s*:\)\@="
 syn keyword myjsBuiltinConstant undefined null false true
 
 syn match myjsControl "[0-9a-zA-Z_$\.]\@<!\%(if\|else\|while\|for\|do\|switch\|case\|goto\|continue\|break\|return\|try\|await\|yield\)[0-9a-zA-Z_$]\@!\%(\s*:\)\@!"
-syn match myjsControlOperator "&&\|||\|?\|=>"
+syn match myjsControlOperator "&&\|||\|?"
+syn match myjsLambdaArrow "=>" contained
 syn match myjsCatch "[0-9a-zA-Z_$\.]\@<!catch[0-9a-zA-Z_$]\@!\%(\s*:\)\@!" nextgroup=myjsFunctionArguments
 
+syn match myjsBindKeyword "[0-9a-zA-Z_$]\@<!\%(var\|let\|const\|class\)[0-9a-zA-Z_$]\@!\%(\s*:\)\@!" nextgroup=myjsBinding
+syn match myjsFunctionKeyword "[0-9a-zA-Z_$]\@<!function[0-9a-zA-Z_$]\@!\%(\s*:\)\@!" nextgroup=myjsFunctionStar,myjsFunctionArguments
 syn match myjsMiscKeyword "[0-9a-zA-Z_$]\@<!\%(new\|in\|async\|instanceof\|get\|set\)[0-9a-zA-Z_$]\@!\%(\s*:\)\@!"
 
 hi def link myjsBinding Identifier
@@ -44,6 +45,7 @@ hi def link myjsObjectKey Constant
 hi def link myjsBuiltinConstant Constant
 hi def link myjsControl Statement
 hi def link myjsControlOperator Statement
+hi def link myjsLambdaArrow Statement
 hi def link myjsCatch Statement
 hi def link myjsMiscKeyword StorageClass
 hi def link myjsBindKeyword StorageClass
