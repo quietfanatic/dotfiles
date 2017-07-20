@@ -30,6 +30,9 @@ syn match mycppBindingOperator "\<operator\>\_s*" contained nextgroup=mycppOpera
 syn match mycppOperatorBinding "\S\+\%(\_s*(\)\@=" contained
 
 syn region mycppLineComment start="//" end="$" keepend
+syn region mycppBlockComment start="/\*" end="\*/"
+
+syn region mycppPreProc matchgroup=mycppPreProc start="^\s*#\w\+" skip="\\\n" end="$" contains=TOP
 
 syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_]*\>\%(\_s*\%([*&]\_s+[*&]\|[a-z_(<]\)\)\@!"
 
@@ -45,6 +48,7 @@ syn match mycppControlOperator "?\|&&\|||"
 syn region mycppString start=+L\?"+ skip=+\\\\\|\\"+ end=+"+
 
 
+hi def link mycppBlockComment Comment
 hi def link mycppControlOperator Statement
 hi def link mycppFunctionBinding Title
 hi def link mycppHexadecimal Constant
@@ -54,6 +58,7 @@ hi def link mycppLineComment Comment
 hi def link mycppMiscConstant Constant
 hi def link mycppNumber Constant
 hi def link mycppOperatorBinding Identifier
+hi def link mycppPreProc PreProc
 hi def link mycppStatement Statement
 hi def link mycppString Constant
 hi def link mycppVarBinding Identifier
