@@ -18,6 +18,7 @@
 !/.vim/syntax
 /.vim/syntax/*
 !/.vim/syntax/mycpp.vim
+!/.vim/syntax/mycpp2.vim
 !/.vim/syntax/myjs.vim
 !/.vim/syntax/myhs.vim
 !/.vim/syntax/myrkt.vim
