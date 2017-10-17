@@ -13,7 +13,8 @@
 !/.vim
 !/.vim/**
 !/bin
-/bin/*
+/bin/**
 !/bin/vimdow
 ~/bin/burn
 !/windows
+!/windows/**
