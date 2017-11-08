@@ -66,17 +66,17 @@ let NERDTreeMinimalUI = 1
 let NERDTreeAutoDeleteBuffer = 1
 
 " Add highlighting for function definition in C++
-autocmd BufEnter *.cpp set syntax=mycpp
-autocmd BufEnter *.hpp set syntax=mycpp
-autocmd BufEnter *.cxx set syntax=mycpp
-autocmd BufEnter *.hxx set syntax=mycpp
-autocmd BufEnter *.c set syntax=mycpp
-autocmd BufEnter *.cs set syntax=mycpp
-autocmd BufEnter *.h set syntax=mycpp
-autocmd BufEnter *.java set syntax=mycpp
-autocmd BufEnter *.cs set syntax=mycpp
+autocmd BufEnter *.cpp set syntax=mycpp2
+autocmd BufEnter *.hpp set syntax=mycpp2
+autocmd BufEnter *.cxx set syntax=mycpp2
+autocmd BufEnter *.hxx set syntax=mycpp2
+autocmd BufEnter *.c set syntax=mycpp2
+autocmd BufEnter *.cs set syntax=mycpp2
+autocmd BufEnter *.h set syntax=mycpp2
+autocmd BufEnter *.java set syntax=mycpp2
+autocmd BufEnter *.cs set syntax=mycpp2
 autocmd BufEnter *.p6 set syntax=myperl6
-autocmd BufEnter *.cpp.epl set syntax=mycpp
+autocmd BufEnter *.cpp.epl set syntax=mycpp2
 autocmd BufEnter *.js set syntax=myjs
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
