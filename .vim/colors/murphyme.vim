@@ -16,7 +16,7 @@ hi Ignore      ctermfg=black guifg=black
 hi PreProc     ctermfg=LightBlue guifg=#8080ff
 hi Special     ctermfg=Lightred guifg=#ff8080
 hi Statement   ctermfg=Yellow guifg=#ffff00
-hi Type        ctermfg=darkcyan guifg=#00c0c0
+hi Type        ctermfg=LightMagenta guifg=#ff80ff
 hi StorageClass ctermfg=lightgrey guifg=#a0a0a0
 hi Error       ctermbg=Red guibg=Red ctermfg=White guifg=White
 hi Todo        ctermbg=DarkYellow guibg=DarkYellow ctermfg=Black guifg=Black
@@ -38,7 +38,7 @@ hi MoreMsg    ctermfg=LightGreen guifg=#80ff80
 hi NonText    ctermfg=Blue guifg=Blue
 hi Question   ctermfg=LightGreen guifg=#80ff80
 hi SpecialKey ctermfg=LightBlue guifg=#8080ff
-hi Title      ctermfg=LightMagenta guifg=#ff80ff
+hi Title      ctermfg=Yellow guifg=#ffff00
 hi WarningMsg ctermfg=LightRed guifg=#ff8080
 
 hi NERDTreeExecFile ctermfg=lightgreen guifg=#80ff80

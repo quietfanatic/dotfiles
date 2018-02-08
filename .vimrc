@@ -3,31 +3,31 @@ set encoding=utf-8  " Not always default I guess
 
 syntax enable
 colorscheme murphyme  " Not included in this repo
-set ts=4
-set sw=4
-set so=3
-set sbr=^^^^^^^^
 set bri
-set lbr
-set si
+set bs=indent,eol,start
+set ci
+set cot=menu,longest
+set dy=lastline,uhex
 set et
-set mouse=a  " Make sure to install vim with +xterm_clipboard
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 set foldlevelstart=99
 set foldminlines=3
-set wildmode=longest,list
-set is
-set dy=lastline,uhex
-set sb
-set spr
-set title
-set sc
-set report=0
-set ci
-set cot=menu,longest
-set go=egmrL
 set gfn=Consolas:h11:cANSI:qDRAFT
-set bs=indent,eol,start
+set go=egrL
+set is
+set lbr
+set mouse=a  " Make sure to install vim with +xterm_clipboard
+set report=0
+set sb
+set sbr=^^^^^^^^
+set sc
+set si
+set so=3
+set spr
+set sw=4
+set title
+set ts=4
+set wildmode=longest,list
 
  " Leaving files all over the current directory is messy
 set dir=~/tmp
