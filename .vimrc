@@ -70,6 +70,7 @@ autocmd BufEnter *.cpp set syntax=mycpp2
 autocmd BufEnter *.hpp set syntax=mycpp2
 autocmd BufEnter *.cxx set syntax=mycpp2
 autocmd BufEnter *.hxx set syntax=mycpp2
+autocmd BufEnter *.cc set syntax=mycpp2
 autocmd BufEnter *.c set syntax=mycpp2
 autocmd BufEnter *.cs set syntax=mycpp2
 autocmd BufEnter *.h set syntax=mycpp2
