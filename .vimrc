@@ -18,6 +18,7 @@ set is
 set lbr
 set mouse=a  " Make sure to install vim with +xterm_clipboard
 set report=0
+set ru
 set sb
 set sbr=^^^^^^^^
 set sc
