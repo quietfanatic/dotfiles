@@ -1,6 +1,7 @@
 syn match myjsFunctionStar "\s*\*" nextgroup=myjsFunctionArguments
 syn match myjsFunctionArguments "\s*([^()]*)" contained contains=myjsBinding
-syn match myjsBinding "\s*[a-zA-Z_$][0-9a-zA-Z_$]*" contained
+syn match myjsBinding "\s*[a-zA-Z_$][0-9a-zA-Z_$]*" contained nextgroup=myjsComma
+syn match myjsComma "\s*," contained nextgroup=myjsBinding
 syn match myjsLambda "\%([a-zA-Z_$][0-9a-zA-Z_$]*\|([^()]*)\)\s*=>" contains=myjsBinding,myjsLambdaArrow
 syn match myjsAbbreviatedFunction "[a-zA-Z_$][0-9a-zA-Z_$]*\s*([^()]*)\s*{" contains=myjsBinding
 

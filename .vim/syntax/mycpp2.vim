@@ -26,9 +26,7 @@ syn match mycppVarBinding "\h\w*\%(\_s*[{[=;,>)(]\|::\@!\)\@=" contained nextgro
 syn match mycppVarBindingComma "\_s*,\_s*" contained nextgroup=mycppVarBinding
  " Or a function if followed by (
  " Unfortunately this also matches variables initialized with legacy constructor syntax, but that was dumb anyway.
- " We'll include a little bit of heuristic to try to avoid matching the simplest cases, but it's far from perfect.
- "  It trips up on function declarations where the first parameter is an unnamed single-word type though...perhaps it's better just to get rid of this.
-syn match mycppFunctionBinding "\h\w*\%(\_s*(\%(\_s*(\|\_s*[*&]*[a-zA-Z0-9_:.>-]\+\_s*[),]\)\@!\)\@=" contained
+syn match mycppFunctionBinding "\h\w*\%(\_s*(\)\@=" contained
  " for operator bindings, highlight the operator part
 syn match mycppBindingOperator "\<operator\>\_s*" contained nextgroup=mycppOperatorBinding
 syn match mycppOperatorBinding "\S\+\%(\_s*(\)\@=" contained
@@ -67,8 +65,10 @@ syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_]*\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\
 syn match mycppEnumClassConstant "\%(\<[A-Z]\w*::\)\+[A-Z]\w*\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\@!\)\h\|[({<>]\|::\)\@!"
  " Sometimes there's a convention to begin static constants with c_
 syn match mycppc_Constant "\<c_\w*\>"
-syn region mycppString start=+\h*"+ skip=+\\\\\|\\"+ end=+"+
-syn cluster mycppConstants contains=mycppNumber,mycppHexadecimal,mycppOctal,mycppKeywordConstant,mycppMiscConstant,mycppString,mycppEnumClassConstant,mycppc_Constant
+syn match mycppChar "\h*'\%([^']\|\\'\|\\[^']+\)'"
+syn region mycppString start=+\h*"+ skip=+\\\\\|\\"+ end=+"\|$+ oneline
+syn region mycppRawString start=+R"\z([^()\s\\]*\)(+ end=+)\z1"+
+syn cluster mycppConstants contains=mycppNumber,mycppHexadecimal,mycppOctal,mycppKeywordConstant,mycppMiscConstant,mycppChar,mycppString,mycppRawString,mycppEnumClassConstant,mycppc_Constant
 
 """"" KEYWORDS AND STUFF
  " Highlight anything that can change control flow or allocate memory
@@ -108,6 +108,8 @@ hi def link mycppOperatorBinding Identifier
 hi def link mycppPreProc PreProc
 hi def link mycppSalKeyword StorageClass
 hi def link mycppStatement Statement
+hi def link mycppChar Constant
 hi def link mycppString Constant
+hi def link mycppRawString Constant
 hi def link mycppUsingNamespace PreProc
 hi def link mycppVarBinding Identifier
