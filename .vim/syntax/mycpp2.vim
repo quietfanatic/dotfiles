@@ -21,7 +21,7 @@ syn match mycppVariadicOperator "\.\.\." contained nextgroup=mycppVarBinding
 syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding
 
  " Then finally the binding word.  It's a variable/parameter if followed by one of {[=;,>):
-syn match mycppVarBinding "\h\w*\%(\_s*[{[=;,>)(]\|::\@!\)\@=" contained nextgroup=mycppVarBindingComma
+syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(]\|::\@!\)\@=" contained nextgroup=mycppVarBindingComma
  " (A concession to bad-style comma-delimited variable declarations)
 syn match mycppVarBindingComma "\_s*,\_s*" contained nextgroup=mycppVarBinding
  " Or a function if followed by (
