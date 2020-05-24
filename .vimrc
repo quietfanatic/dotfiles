@@ -28,7 +28,9 @@ set spr
 set sw=4
 set title
 set ts=4
-set wildmode=longest,list
+set wildmode=longest
+set complete=.,w,b,u,t
+set completeopt=menu
 
  " Leaving files all over the current directory is messy
 set dir=~/tmp
