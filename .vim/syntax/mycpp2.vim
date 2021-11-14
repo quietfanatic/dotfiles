@@ -5,7 +5,7 @@
 
 """"" BINDINGS
  " Declarations always start with some bare identifier
-syn match mycppIdentifier "\<\h\w*\>" nextgroup=mycppIdentifierTemplate,mycppStars,mycppVariadicOperator,mycppishArrayType skipnl transparent
+syn match mycppIdentifier "\<\h\w*\>" nextgroup=mycppIdentifierTemplate,mycppStars,mycppVariadicOperator,mycppishArrayType,mycppMiscKeyword skipnl transparent
  " Then there can be some namespaces; Technically this makes it not a binding occurence of the name, but highlighting this is still useful for navigation
 syn match mycppBindingNamespace "\_s*\h\w*\_s*\%(<\|::\)\@=" contained nextgroup=mycppBindingNamespaceTemplate,mycppBindingNamespaceOperator
 syn region mycppBindingNamespaceTemplate matchgroup=mycppBindingNamespaceTemplate start="<" end=">\|$" contained contains=mycppTemplate nextgroup=mycppBindingNamespaceOperator,mycppStars skipnl
@@ -55,16 +55,18 @@ syn match mycppDefineBinding "\h\w*" contained
 
 syn match mycppUsingNamespace "\<using\_s\+namespace\>"
 syn match mycppMacroCall "\<[A-Z_][0-9A-Z_]*(\@="
+syn keyword mycppCompileKeyword friend typedef
 
 """"" CONSTANTS
- " We're not going to list all the different recognized postfix/prefix modifier letters for numbers and strings, we'll just accept anything
+ " We're not going to list all the different recognized postfix/prefix modifier letters for numbers and strings, we'll just accept anything. UPDATE: well anything goes in modern C++ so
 syn match mycppNumber "\%(\w\@<![+-]\)\?\%(\<[0-9]\+\.\?\|\.[0-9]\+\)\%([eEpP][+-]\?[0-9]\+\)\?\h*"
-syn match mycppHexadecimal "\%(\w\@<![+-]\)\?\<0[xX][0-9a-fA-F]\+\h*"  " TODO: hex floats?
-syn match mycppOctal "\%(\w\@<![+-]\)\?\<0[0-7]\+\h*" contains=mycppOctalZero
+syn match mycppHexadecimal "\%(\w\@<![+-]\)\?\<0[xX][0-9a-fA-F']\+\h*"  " TODO: hex floats?
+syn match mycppOctal "\%(\w\@<![+-]\)\?\<0[0-7']\+\h*" contains=mycppOctalZero
 syn match mycppOctalZero "\<0" contained
-syn keyword mycppKeywordConstant true false nullptr sizeof alignof typeid decltype
+syn match mycppBinary "\%(\w\@<![+-]\)\?\<0[bB][01']\+\h*"
+syn keyword mycppKeywordConstant true false nullptr sizeof alignof typeid decltype null inf nan
  " Assume all-caps identifiers that aren't in a type position are constants
-syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_]*\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\@!\)\h\|[({<]\|::\)\@!"
+syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_]\+\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\@!\)\h\|[({<]\|::\)\@!"
  " I hate this, but identifiers with :: in them where each component begins with a capital are likely members of an enum class.
 syn match mycppEnumClassConstant "\%(\<[A-Z]\w*::\)\+[A-Z]\w*\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\@!\)\h\|[({<>]\|::\)\@!"
  " Sometimes there's a convention to begin static constants with c_
@@ -72,7 +74,7 @@ syn match mycppc_Constant "\<c_\w*\>"
 syn match mycppChar "\h*'\%([^']\|\\'\|\\[^']+\)'"
 syn region mycppString start=+\h*"+ skip=+\\\\\|\\"+ end=+"\|$+ oneline
 syn region mycppRawString start=+R"\z([^()\s\\]*\)(+ end=+)\z1"+
-syn cluster mycppConstants contains=mycppNumber,mycppHexadecimal,mycppOctal,mycppKeywordConstant,mycppMiscConstant,mycppChar,mycppString,mycppRawString,mycppEnumClassConstant,mycppc_Constant
+syn cluster mycppConstants contains=mycppNumber,mycppHexadecimal,mycppOctal,mycppBinary,mycppKeywordConstant,mycppMiscConstant,mycppChar,mycppString,mycppRawString,mycppEnumClassConstant,mycppc_Constant
 
 """"" KEYWORDS AND STUFF
  " Highlight anything that can change control flow or allocate memory
@@ -82,9 +84,9 @@ syn match mycppControlOperator "?\|&&\|||"
 syn keyword mycppContolOperator and or
 
  " Grey these out to lower noise
-syn keyword mycppMiscKeyword explicit final inline override private protected public template virtual
+syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit final inline noexcept override private protected public register static template virtual
 syn match mycppSalKeyword "\<__\@!\h\w*_\@<!_\>"
-syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert
+syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert AA AB AC AD AE AF AG AH AI AJ AK AL AM AN AO AP AQ AR AS AT AU AV AW AX AY AZ
 
 syn region mycppMergeMarker start="^\%(<<<<<<<\||||||||\|=======\|>>>>>>>\)" end="$" keepend
 
@@ -93,6 +95,7 @@ hi def link mycppAssert StorageClass
 hi def link mycppBlockComment Comment
 hi def link mycppc_Constant Constant
 hi def link mycppClassBinding Identifier
+hi def link mycppCompileKeyword PreProc
 hi def link mycppControlOperator Statement
 hi def link mycppDefine PreProc
 hi def link mycppDefineBinding Identifier
@@ -111,6 +114,7 @@ hi def link mycppMiscKeyword StorageClass
 hi def link mycppNumber Constant
 hi def link mycppOctal Constant
 hi def link mycppOctalZero PreProc
+hi def link mycppBinary Constant
 hi def link mycppOperatorBinding Identifier
 hi def link mycppPreProc PreProc
 hi def link mycppSalKeyword StorageClass

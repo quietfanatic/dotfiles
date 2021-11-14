@@ -20,7 +20,7 @@ syn match myjsHexadecimal "0x[0-9a-fA-F]\+"
 
 syn region myjsRegex start="\%([0-9a-zA-Z_$)\]}]\s*\)\@<!//\@!" skip="\\\\\|\\/" end="/"
 
-syn match myjsObjectKey "[a-zA-Z_$][0-9a-zA-Z_$]*\%(\s*:\)\@="
+syn match myjsObjectKey "\%([?a-zA-Z_$][0-9a-zA-Z_$]\_s*\)\@<![a-zA-Z_$][0-9a-zA-Z_$]*\%(\s*:\)\@="
 syn keyword myjsBuiltinConstant undefined null false true
 
 syn match myjsControl "[0-9a-zA-Z_$\.]\@<!\%(if\|else\|while\|for\|do\|switch\|case\|goto\|continue\|break\|return\|try\|await\|yield\)[0-9a-zA-Z_$]\@!\%(\s*:\)\@!"
