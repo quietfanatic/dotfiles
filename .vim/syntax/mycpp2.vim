@@ -5,41 +5,45 @@
 
 """"" BINDINGS
  " Declarations always start with some bare identifier
-syn match mycppIdentifier "\<\h\w*\>" nextgroup=mycppIdentifierTemplate,mycppStars,mycppVariadicOperator,mycppishArrayType transparent
+syn match mycppIdentifier "\<\h\w*\>" nextgroup=mycppIdentifierTemplate,mycppStars,mycppVariadicOperator,mycppishArrayType skipnl transparent
  " Then there can be some namespaces; Technically this makes it not a binding occurence of the name, but highlighting this is still useful for navigation
 syn match mycppBindingNamespace "\_s*\h\w*\_s*\%(<\|::\)\@=" contained nextgroup=mycppBindingNamespaceTemplate,mycppBindingNamespaceOperator
-syn region mycppBindingNamespaceTemplate matchgroup=mycppBindingNamespaceTemplate start="<" end=">\|$" contained contains=mycppTemplate nextgroup=mycppBindingNamespaceOperator,mycppStars
-syn match mycppBindingNamespaceOperator "::\_s*" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator
+syn region mycppBindingNamespaceTemplate matchgroup=mycppBindingNamespaceTemplate start="<" end=">\|$" contained contains=mycppTemplate nextgroup=mycppBindingNamespaceOperator,mycppStars skipnl
+syn match mycppBindingNamespaceOperator "::\_s*" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator skipnl
  " Can be followed by a template parameter list
-syn region mycppIdentifierTemplate matchgroup=mycppIdentifierTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants nextgroup=mycppStars,mycppVariadicOperator,mycppishArrayType
+syn region mycppIdentifierTemplate matchgroup=mycppIdentifierTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants nextgroup=mycppStars,mycppVariadicOperator,mycppishArrayType skipnl
 syn region mycppTemplate matchgroup=mycppTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants
  " Followed by optional *s and &s but a non-optional space.  This matches 'type* name' and 'type *name' but not 'type * name' or 'type*name'
-syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator
+syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator skipnl
  " Or there can be a ... for variadic stuff
-syn match mycppVariadicOperator "\.\.\." contained nextgroup=mycppVarBinding
+syn match mycppVariadicOperator "\.\.\." contained nextgroup=mycppVarBinding skipnl
  " (Recognize Java/C#-style arrays also)
-syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding
+syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding skipnl
 
  " Then finally the binding word.  It's a variable/parameter if followed by one of {[=;,>):
-syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(]\|::\@!\)\@=" contained nextgroup=mycppVarBindingComma
+syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(\]]\|::\@!\)\@=" contained nextgroup=mycppVarBindingComma
  " (A concession to bad-style comma-delimited variable declarations)
-syn match mycppVarBindingComma "\_s*,\_s*" contained nextgroup=mycppVarBinding
+syn match mycppVarBindingComma "\_s*,\_s*" contained nextgroup=mycppVarBinding skipnl
  " Or a function if followed by (
  " Unfortunately this also matches variables initialized with legacy constructor syntax, but that was dumb anyway.
 syn match mycppFunctionBinding "\h\w*\%(\_s*(\)\@=" contained
  " for operator bindings, highlight the operator part
-syn match mycppBindingOperator "\<operator\>\_s*" contained nextgroup=mycppOperatorBinding
+syn match mycppBindingOperator "\<operator\>\_s*" contained nextgroup=mycppOperatorBinding skipnl
 syn match mycppOperatorBinding "\S\+\%(\_s*(\)\@=" contained
+
+ " Special treatment for destructuring.  This is just a quick hack, so it
+ " may not catch all situations
+syn region mycppDestructure matchgroup=mycppDestructure start="auto&\?&\?\_s*\[" end="]" contains=mycppVarBinding
 
  " Special treatment for class-like declarations.
  " Even though the above rules would catch most of them, certain situations (like the final keyword) can throw them off
-syn keyword mycppClassKeyword class namespace struct union nextgroup=mycppClassBinding
+syn keyword mycppClassKeyword class namespace struct union nextgroup=mycppClassBinding skipnl
 syn match mycppClassBinding "\_s*\h\w*" contained
 
 
 """"" COMMENTS
 syn region mycppLineComment start="//" end="$" keepend
-syn region mycppLineCommentTitle start="///" end="$" keepend
+syn region mycppLineCommentTitle start="////" end="$" keepend
 syn region mycppBlockComment start="/\*" end="\*/"
 
 """"" PREPROCESSOR (and similar things)
@@ -82,6 +86,8 @@ syn keyword mycppMiscKeyword explicit final inline override private protected pu
 syn match mycppSalKeyword "\<__\@!\h\w*_\@<!_\>"
 syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert
 
+syn region mycppMergeMarker start="^\%(<<<<<<<\||||||||\|=======\|>>>>>>>\)" end="$" keepend
+
 
 hi def link mycppAssert StorageClass
 hi def link mycppBlockComment Comment
@@ -99,6 +105,7 @@ hi def link mycppKeywordConstant Constant
 hi def link mycppLineComment Comment
 hi def link mycppLineCommentTitle Title
 hi def link mycppMacroCall PreProc
+hi def link mycppMergeMarker Title
 hi def link mycppMiscConstant Constant
 hi def link mycppMiscKeyword StorageClass
 hi def link mycppNumber Constant
