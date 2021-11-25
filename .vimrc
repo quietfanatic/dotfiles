@@ -9,6 +9,7 @@ set ci
 set cot=menu,longest
 set dy=lastline,uhex
 set et
+set fileformats=unix,dos
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 set foldlevelstart=99
 set foldminlines=3
