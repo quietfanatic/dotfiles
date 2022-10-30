@@ -84,7 +84,7 @@ syn match mycppControlOperator "?\|&&\|||"
 syn keyword mycppContolOperator and or
 
  " Grey these out to lower noise
-syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit final inline noexcept override private protected public register static template virtual
+syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit extern final inline noexcept override private protected public register static template virtual
 syn match mycppSalKeyword "\<__\@!\h\w*_\@<!_\>"
 syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert AA AB AC AD AE AF AG AH AI AJ AK AL AM AN AO AP AQ AR AS AT AU AV AW AX AY AZ
 

@@ -13,7 +13,9 @@ set fileformats=unix,dos
 set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
 set foldlevelstart=99
 set foldminlines=3
-set gfn=Consolas:h11:cANSI:qDRAFT
+if has('win32')
+    set guifont=Monospace:h11:cANSI:qDRAFT
+endif
 set go=egrL
 set is
 set lbr
