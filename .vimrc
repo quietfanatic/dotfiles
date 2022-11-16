@@ -29,6 +29,7 @@ set si
 set so=3
 set spr
 set sw=4
+set textwidth=80
 set title
 set ts=4
 set wildmode=longest
