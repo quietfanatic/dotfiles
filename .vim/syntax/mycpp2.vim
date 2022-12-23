@@ -13,19 +13,17 @@ syn match mycppBindingNamespaceOperator "::\_s*" contained nextgroup=mycppBindin
  " Can be followed by a template parameter list
 syn region mycppIdentifierTemplate matchgroup=mycppIdentifierTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants nextgroup=mycppStars,mycppVariadicOperator,mycppishArrayType skipnl
 syn region mycppTemplate matchgroup=mycppTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants
- " Followed by optional *s and &s but a non-optional space.  This matches 'type* name' and 'type *name' but not 'type * name' or 'type*name'
-syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator skipnl
+ " Followed by optional *s and &s but a non-optional space.  This matches 'type* name' and 'type *name' but not 'type * name' or 'type*name'.  Also allow some terminating characters so that type&& doesn't get taken to be infix &&.
+syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!\|[*&]\+\_s*[;,>)\]]\@=" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator skipnl
  " Or there can be a ... for variadic stuff
 syn match mycppVariadicOperator "\.\.\." contained nextgroup=mycppVarBinding skipnl
  " (Recognize Java/C#-style arrays also)
 syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding skipnl
 
  " Then finally the binding word.  It's a variable/parameter if followed by one of {[=;,>):
-syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(\]]\|::\@!\)\@=" contained nextgroup=mycppVarBindingComma
- " (A concession to bad-style comma-delimited variable declarations)
-syn match mycppVarBindingComma "\_s*,\_s*" contained nextgroup=mycppVarBinding skipnl
+syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(\]]\|::\@!\)\@=" contained
  " Or a function if followed by (
- " Unfortunately this also matches variables initialized with legacy constructor syntax, but that was dumb anyway.
+ " Unfortunately this also matches variables initialized with parenthesized constructor syntax.
 syn match mycppFunctionBinding "\h\w*\%(\_s*(\)\@=" contained
  " for operator bindings, highlight the operator part
 syn match mycppBindingOperator "\<operator\>\_s*" contained nextgroup=mycppOperatorBinding skipnl
@@ -86,10 +84,9 @@ syn keyword mycppContolOperator and or
  " Grey these out to lower noise
 syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit extern final inline noexcept override private protected public register static template virtual
 syn match mycppSalKeyword "\<__\@!\h\w*_\@<!_\>"
-syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert AA AB AC AD AE AF AG AH AI AJ AK AL AM AN AO AP AQ AR AS AT AU AV AW AX AY AZ
+syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert require require_throw expect never require_sdl
 
 syn region mycppMergeMarker start="^\%(<<<<<<<\||||||||\|=======\|>>>>>>>\)" end="$" keepend
-
 
 hi def link mycppAssert StorageClass
 hi def link mycppBlockComment Comment
