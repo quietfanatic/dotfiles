@@ -10,7 +10,8 @@ set cot=menu,longest
 set dy=lastline,uhex
 set et
 set fileformats=unix,dos
-set fo-=t  " I can't figure out why +t is being set now.  Infuriating.
+set formatoptions-=t  " I can't figure out why +t is being set now.  Infuriating.
+set formatoptions+=j
 set foldlevelstart=99
 set foldminlines=3
 if has('win32')
@@ -57,6 +58,16 @@ noremap <End> $l
  " This really shouldn't be necessary.
 inoremap # X#
 
+ " Save my pinky finger
+inoremap <expr> <silent> ; Semicolon()
+function Semicolon ()
+    if getline('.')[col('.')-2] == ';' && getline('.')[col('.')-3] =~? '[a-zA-Z0-9_>)]'
+        return "\<BS>::"
+    else
+        return ';'
+    endif
+endfunction
+
  " Don't make me think
 nnoremap <C-D> :q<CR>
 
@@ -101,8 +112,8 @@ autocmd Syntax ruby set sw=2
 autocmd Syntax ruby set ts=2
 
  " Thid were copied from somewhere on the internet.  I forgot where.
-inoremap <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
-inoremap <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
+inoremap <silent> <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
+inoremap <silent> <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
  " As was this
 function! SmartHome()
   let first_nonblank = match(getline('.'), '\S') + 1
