@@ -1,4 +1,10 @@
+! swap home/end and pageup/pagedown
 keycode 110 = Prior
 keycode 112 = Home
 keycode 115 = Next
 keycode 117 = End
+! swap [] and ()
+keycode  34 = parenleft braceleft parenleft braceleft
+keycode  35 = parenright braceright parenright braceright
+keycode  18 = 9 bracketleft 9 bracketleft
+keycode  19 = 0 bracketright 0 bracketright
