@@ -14,11 +14,11 @@ syn match mycppBindingNamespaceOperator "::\_s*" contained nextgroup=mycppBindin
 syn region mycppIdentifierTemplate matchgroup=mycppIdentifierTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants nextgroup=mycppStars,mycppVariadicOperator,mycppishArrayType skipnl
 syn region mycppTemplate matchgroup=mycppTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants
  " Followed by optional *s and &s but a non-optional space.  This matches 'type* name' and 'type *name' but not 'type * name' or 'type*name'.  Also allow some terminating characters so that type&& doesn't get taken to be infix &&.
-syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!\|[*&]\+\_s*[;,>)\]]\@=" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator skipnl
+syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!\|[*&]\+\_s*[;,>)\]]\@=" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator,mycppStatement,mycppMiscKeyword skipnl
  " Or there can be a ... for variadic stuff
 syn match mycppVariadicOperator "\.\.\." contained nextgroup=mycppVarBinding skipnl
  " (Recognize Java/C#-style arrays also)
-syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding skipnl
+syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding,mycppStatement,mycppMiscKeyword skipnl
 
  " Then finally the binding word.  It's a variable/parameter if followed by one of {[=;,>):
 syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(\]]\|::\@!\)\@=" contained
@@ -53,7 +53,7 @@ syn match mycppDefineBinding "\h\w*" contained
 
 syn match mycppUsingNamespace "\<using\_s\+namespace\>"
 syn match mycppMacroCall "\<[A-Z_][0-9A-Z_]*(\@="
-syn keyword mycppCompileKeyword friend typedef
+syn keyword mycppCompileKeyword extern friend private protected public requires static template typedef
 
 """"" CONSTANTS
  " We're not going to list all the different recognized postfix/prefix modifier letters for numbers and strings, we'll just accept anything. UPDATE: well anything goes in modern C++ so
@@ -82,7 +82,7 @@ syn match mycppControlOperator "?\|&&\|||"
 syn keyword mycppContolOperator and or
 
  " Grey these out to lower noise
-syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit extern final inline noexcept override private protected public register static template virtual
+syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit extern inline noexcept NE override register ALWAYS_INLINE NOINLINE
 syn match mycppSalKeyword "\<__\@!\h\w*_\@<!_\>"
 syn keyword mycppAssert assert ASSERT static_assert NT_ASSERT Release_Assert require require_throw expect never require_sdl
 

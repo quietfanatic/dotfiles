@@ -28,11 +28,11 @@ set sbr=^^^^^^^^
 set sc
 set si
 set so=3
+set shiftwidth=4
 set spr
-set sw=4
 set textwidth=80
 set title
-set ts=4
+set tabstop=4
 set wildmode=longest
 set complete=.,w,b,u,t
 set completeopt=menu
@@ -102,6 +102,7 @@ autocmd BufEnter *.ohs set syntax=myhs
 autocmd BufEnter *.hacc set syntax=hacc
 autocmd FileType perl set syntax=myperl
 autocmd FileType perl6 set syntax=myperl6
+autocmd FileType asm set tabstop=8 shiftwidth=8
 "autocmd BufEnter *
 "    \ let start = getline(1) . getline(2) . getline(3) . getline(4) . getline(5) |
 "    \ if start =~? "use v6" || start =~? "unit" |
