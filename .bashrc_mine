@@ -1,9 +1,7 @@
 
-PATH=~/bin:$PATH:~/stash/git/rakudo/install/bin:~/stash/git/rakudo/install/share/perl6/site/bin
+PATH=~/bin:/s/sync/programs/liv:$PATH
 
-if which vimdow > /dev/null; then
-    export EDITOR=vimdow  # This should be in ~/bin
-fi
+export EDITOR='gvim --nofork'
 
 alias ja=LC_ALL=ja_JP.UTF-8
 alias en=LC_ALL=en_US.UTF-8
@@ -13,19 +11,15 @@ alias devim='vim +NERDTree'
 
 alias ..='cd ..'
 
-function cg {
-    cd ~/stash/git/$1
-}
-function c {
-    local name=$1
-    for d in ~/* ~/*/* ~/*/*/*; do
-        if [[ -d $d && $d == $name ]]; then
-            cd $d
-            return 0
-        fi
-    done
-    echo "No directory '$name' found around home." 1>&2
-    return 1
+alias gs='git status'
+alias gc='git commit'
+
+alias cg='valgrind --tool=cachegrind --cachegrind-out-file=tmp/cachegrind.out --cache-sim=yes --branch-sim=yes'
+
+alias m='perl make.pl --jobs=7'
+
+function ms {
+    perl make.pl "$@" && gvim "$@"
 }
 
 function bashrc {
@@ -33,7 +27,7 @@ function bashrc {
     source ~/.bashrc_mine
 }
 
-export HISTCONTROL=erasedups
+export HISTCONTROL=ignorespace:erasedups
 
  # Prevent rsync from breaking because apparently it runs this file
  #  and breaks if anything gets printed.  TECHNOLOGY!
@@ -41,7 +35,7 @@ if [[ $- == *i* ]]; then
      # Set prompt, colors, terminal window title
      # NOTE: the trap should be the last thing run in this file
     if [[ $COLORTERM ]]; then
-        PS1='\[\e]0;${USER}@${HOSTNAME} `dirs -0` \$\007\]${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[1;34m\] \w \$\[\e[0;1m\] '
+        PS1='\[\e]0;${USER}@${HOSTNAME} `dirs -0` \$\007\]${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ \[\e[0;1m\]'
         trap 'echo -ne "\e[0m\e]0;${USER}@${HOSTNAME} `dirs -0` \$ ${BASH_COMMAND}\007"' DEBUG
     else
         PS1='${debian_chroot:+($debian_chroot)}\[\e[1;32m\]\u@\h\[\e[1;34m\] \w \$\[\e[0;1m\] '

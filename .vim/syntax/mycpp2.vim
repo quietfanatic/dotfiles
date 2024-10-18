@@ -14,11 +14,11 @@ syn match mycppBindingNamespaceOperator "::\_s*" contained nextgroup=mycppBindin
 syn region mycppIdentifierTemplate matchgroup=mycppIdentifierTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants nextgroup=mycppStars,mycppVariadicOperator,mycppishArrayType skipnl
 syn region mycppTemplate matchgroup=mycppTemplate start="<" end=">\|$" contained contains=mycppTemplate,@mycppConstants
  " Followed by optional *s and &s but a non-optional space.  This matches 'type* name' and 'type *name' but not 'type * name' or 'type*name'.  Also allow some terminating characters so that type&& doesn't get taken to be infix &&.
-syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!\|[*&]\+\_s*[;,>)\]]\@=" contained nextgroup=mycppBindingNamespace,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator,mycppStatement,mycppMiscKeyword skipnl
+syn match mycppStars "[*&]*\_s\+\|\_s+[*&]*\_s\@!\|[*&]\+\_s*[;,.>)\]]\@=" contained nextgroup=mycppBindingNamespace,mycppVariadicOperator,mycppVarBinding,mycppFunctionBinding,mycppBindingOperator,mycppStatement,mycppCompileKeyword,mycppMiscKeyword skipnl
  " Or there can be a ... for variadic stuff
-syn match mycppVariadicOperator "\.\.\." contained nextgroup=mycppVarBinding skipnl
+syn match mycppVariadicOperator "\.\.\.\_s*" contained nextgroup=mycppVarBinding skipnl
  " (Recognize Java/C#-style arrays also)
-syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding,mycppStatement,mycppMiscKeyword skipnl
+syn match mycppishArrayType "\[\]\_s*" contained nextgroup=mycppishArrayType,mycppVarBinding,mycppFunctionBinding,mycppStatement,mycppCompileKeyword,mycppMiscKeyword skipnl
 
  " Then finally the binding word.  It's a variable/parameter if followed by one of {[=;,>):
 syn match mycppVarBinding "\h\w*\_s*\%([{[=;,>)(\]]\|::\@!\)\@=" contained
@@ -28,6 +28,7 @@ syn match mycppFunctionBinding "\h\w*\%(\_s*(\)\@=" contained
  " for operator bindings, highlight the operator part
 syn match mycppBindingOperator "\<operator\>\_s*" contained nextgroup=mycppOperatorBinding skipnl
 syn match mycppOperatorBinding "\S\+\%(\_s*(\)\@=" contained
+syn match mycppLabel "\<\h\w*\%(::\@!\)\@="
 
  " Special treatment for destructuring.  This is just a quick hack, so it
  " may not catch all situations
@@ -35,7 +36,7 @@ syn region mycppDestructure matchgroup=mycppDestructure start="auto&\?&\?\_s*\["
 
  " Special treatment for class-like declarations.
  " Even though the above rules would catch most of them, certain situations (like the final keyword) can throw them off
-syn keyword mycppClassKeyword class namespace struct union nextgroup=mycppClassBinding skipnl
+syn keyword mycppClassKeyword class namespace struct union nextgroup=mycppClassBinding,mycppVariadicOperator skipnl
 syn match mycppClassBinding "\_s*\h\w*" contained
 
 
@@ -45,7 +46,7 @@ syn region mycppLineCommentTitle start="////" end="$" keepend
 syn region mycppBlockComment start="/\*" end="\*/"
 
 """"" PREPROCESSOR (and similar things)
-syn region mycppPreProc matchgroup=mycppPreProc start="^\s*#\w\+" skip="\\\n" end="$" contains=TOP
+syn region mycppPreProc matchgroup=mycppPreProc start="^\s*#\w\+" skip="\\\n" end="$" contains=TOP,mycppPreProc
 syn match mycppInclude "^\s*#include\>\_s*" nextgroup=mycppIncludeFilename
 syn match mycppIncludeFilename +".*"\|<.*>+ contained
 syn match mycppDefine "^\s*#define\>\_s*" nextgroup=mycppDefineBinding
@@ -53,7 +54,7 @@ syn match mycppDefineBinding "\h\w*" contained
 
 syn match mycppUsingNamespace "\<using\_s\+namespace\>"
 syn match mycppMacroCall "\<[A-Z_][0-9A-Z_]*(\@="
-syn keyword mycppCompileKeyword extern friend private protected public requires static template typedef
+syn keyword mycppCompileKeyword extern friend private protected public requires static template typedef virtual
 
 """"" CONSTANTS
  " We're not going to list all the different recognized postfix/prefix modifier letters for numbers and strings, we'll just accept anything. UPDATE: well anything goes in modern C++ so
@@ -67,7 +68,7 @@ syn keyword mycppKeywordConstant true false nullptr sizeof alignof typeid declty
 syn match mycppMiscConstant "\<[A-Z_][0-9A-Z_]\+\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\@!\)\h\|[({<]\|::\)\@!"
  " I hate this, but identifiers with :: in them where each component begins with a capital are likely members of an enum class.
 syn match mycppEnumClassConstant "\%(\<[A-Z]\w*::\)\+[A-Z]\w*\>\%(\%([*&]*\_s\+\|\_s+[*&]*\_s\@!\)\h\|[({<>]\|::\)\@!"
- " Sometimes there's a convention to begin static constants with c_
+ " Sometimes there's a convention to begin constants with c_
 syn match mycppc_Constant "\<c_\w*\>"
 syn match mycppChar "\h*'\%([^']\|\\'\|\\[^']+\)'"
 syn region mycppString start=+\h*"+ skip=+\\\\\|\\"+ end=+"\|$+ oneline
@@ -77,6 +78,7 @@ syn cluster mycppConstants contains=mycppNumber,mycppHexadecimal,mycppOctal,mycp
 """"" KEYWORDS AND STUFF
  " Highlight anything that can change control flow or allocate memory
 syn keyword mycppStatement _Exit abort asm break case catch continue default delete do else exit free for goto if longjmp malloc new quick_exit raise realloc return setjmp switch system throw try while yield
+syn match mycppStatementCustom "\<\%(raise\|throw\)_\@="
  " These operators can change the control flow, so highlight them too.
 syn match mycppControlOperator "?\|&&\|||"
 syn keyword mycppContolOperator and or
@@ -102,6 +104,7 @@ hi def link mycppHexadecimal Constant
 hi def link mycppInclude PreProc
 hi def link mycppIncludeFilename Constant
 hi def link mycppKeywordConstant Constant
+hi def link mycppLabel Type
 hi def link mycppLineComment Comment
 hi def link mycppLineCommentTitle Title
 hi def link mycppMacroCall PreProc
@@ -112,10 +115,11 @@ hi def link mycppNumber Constant
 hi def link mycppOctal Constant
 hi def link mycppOctalZero PreProc
 hi def link mycppBinary Constant
-hi def link mycppOperatorBinding Identifier
+hi def link mycppOperatorBinding Type
 hi def link mycppPreProc PreProc
 hi def link mycppSalKeyword StorageClass
 hi def link mycppStatement Statement
+hi def link mycppStatementCustom Statement
 hi def link mycppChar Constant
 hi def link mycppString Constant
 hi def link mycppRawString Constant

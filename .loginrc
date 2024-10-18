@@ -1,7 +1,6 @@
 #!/bin/bash
 
-sleep 10;
- # Configure touchpad
-synclient TapButton2=2 TapButton3=3 SingleTapTimeout=100 VertScrollDelta=-101 HorizScrollDelta=-101
- # Remap some keys.
 xmodmap ~/.Xmodmap
+synclient VertScrollDelta=-6
+synclient HorizScrollDelta=-6
+

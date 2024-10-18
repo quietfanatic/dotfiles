@@ -12,10 +12,13 @@ set et
 set fileformats=unix,dos
 set formatoptions-=t  " I can't figure out why +t is being set now.  Infuriating.
 set formatoptions+=j
+set comments+=b:--
 set foldlevelstart=99
 set foldminlines=3
 if has('win32')
     set guifont=Monospace:h11:cANSI:qDRAFT
+else
+    set guifont=Monospace\ 14
 endif
 set go=egrL
 set is
@@ -140,8 +143,8 @@ endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
  " Bring attention to too-long lines (is.gd/IBV2013)
-"highlight ColorColumn ctermbg=darkgrey
-"call matchadd('ColorColumn', '\%81v', 100)
+highlight ColorColumn ctermbg=darkgrey guibg=#222222
+call matchadd('ColorColumn', '\%81v', 100)
 
  " Show tabs, trailing whitespace, NBSPs (is.gd/IBV2013)
 set listchars=tab:·\ ,trail:·,nbsp:·
