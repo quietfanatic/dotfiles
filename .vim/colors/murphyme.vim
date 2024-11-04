@@ -8,7 +8,7 @@ if exists("syntax_on")
 endif
 let g:colors_name = "murphyme"
 
-hi Normal     ctermfg=white guibg=black guifg=white
+hi Normal     ctermfg=white guibg=black guifg=#ffe0d0
 hi Comment     ctermfg=Lightred guifg=#ff8080
 hi Constant    ctermfg=lightgreen guifg=#80ff80
 hi Identifier  ctermfg=lightcyan guifg=#00ffff

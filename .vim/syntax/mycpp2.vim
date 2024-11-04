@@ -81,7 +81,7 @@ syn keyword mycppStatement _Exit abort asm break case catch continue default del
 syn match mycppStatementCustom "\<\%(raise\|throw\)_\@="
  " These operators can change the control flow, so highlight them too.
 syn match mycppControlOperator "?\|&&\|||"
-syn keyword mycppContolOperator and or
+syn keyword mycppControlOperator and or
 
  " Grey these out to lower noise
 syn keyword mycppMiscKeyword constexpr consteval constinit CE explicit extern inline noexcept NE override register ALWAYS_INLINE NOINLINE

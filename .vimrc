@@ -6,6 +6,7 @@ colorscheme murphyme  " Not included in this repo
 set bri
 set bs=indent,eol,start
 set ci
+set cinwords=
 set cot=menu,longest
 set dy=lastline,uhex
 set et
@@ -103,9 +104,9 @@ autocmd BufEnter *.js set syntax=myjs
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
 autocmd BufEnter *.hacc set syntax=hacc
+autocmd BufEnter *.s set syntax=myrvs
 autocmd FileType perl set syntax=myperl
 autocmd FileType perl6 set syntax=myperl6
-autocmd FileType asm set tabstop=8 shiftwidth=8
 "autocmd BufEnter *
 "    \ let start = getline(1) . getline(2) . getline(3) . getline(4) . getline(5) |
 "    \ if start =~? "use v6" || start =~? "unit" |
