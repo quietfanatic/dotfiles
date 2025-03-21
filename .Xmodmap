@@ -1,10 +1,10 @@
 ! swap home/end and pageup/pagedown
-keycode 110 = Prior
-keycode 112 = Home
-keycode 115 = Next
-keycode 117 = End
+!keycode 110 = Prior
+!keycode 112 = Home
+!keycode 115 = Next
+!keycode 117 = End
 ! swap [] and ()
-keycode  34 = bracketleft braceleft bracketleft braceleft
-keycode  35 = bracketright braceright bracketright braceright
-keycode  18 = 9 parenleft 9 parenleft
-keycode  19 = 0 parenright 0 parenright
+!keycode  34 = bracketleft braceleft bracketleft braceleft
+!keycode  35 = bracketright braceright bracketright braceright
+!keycode  18 = 9 parenleft 9 parenleft
+!keycode  19 = 0 parenright 0 parenright
