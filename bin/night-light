@@ -1,7 +1,14 @@
 #!/usr/bin/perl
 
- # Adjusts the night light parameters on linux mint cinnamon 22.1
- # 
+ # Adjusts the night light temperature on Linux Mint Cinnamon 22.1.
+ # Made to be used with keyboard shortcuts.
+ # Recommended bindings:
+ #     ctrl+brightnessup: night-light +500
+ #     ctrl+brightnessdown: night-light -500
+ #     ctrl+(whatever's next to brightness): night-light toggle
+ # If it isn't scheduled night light time, the night light won't show.  To allow
+ # toggling it at any time of day, set its schedule to manual and set the start
+ # time and end time to the same time.
 
 use v5.38;
 
@@ -31,7 +38,7 @@ sub set_temp {
 }
 
 if (@ARGV == 0) {
-    say get_enabled, ' ', get_temp();
+    say get_enabled(), ' ', get_temp();
 }
 elsif (@ARGV != 1) {
     die "$0: Must only one argument.\n";
