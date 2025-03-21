@@ -1,0 +1,71 @@
+#!/usr/bin/perl
+
+ # Adjusts the night light parameters on linux mint cinnamon 22.1
+ # 
+
+use v5.38;
+
+my $schema = 'org.cinnamon.settings-daemon.plugins.color';
+my $enabled_key = 'night-light-enabled';
+my $temp_key = 'night-light-temperature';
+
+sub get_enabled {
+    my $val = `gsettings get $schema $enabled_key`;
+    chomp $val;
+    return $val;
+}
+
+sub set_enabled {
+    system("gsettings set $schema $enabled_key $_[0]");
+}
+
+sub get_temp {
+    my $val = `gsettings get $schema $temp_key`;
+    $val =~ /^uint32 ([0-9]{4})$/
+        or die "$0: Unrecognized value for night-light-temperature: $val";
+    return 0+$1;
+}
+
+sub set_temp {
+    system("gsettings set $schema $temp_key $_[0]");
+}
+
+if (@ARGV == 0) {
+    say get_enabled, ' ', get_temp();
+}
+elsif (@ARGV != 1) {
+    die "$0: Must only one argument.\n";
+}
+elsif ($ARGV[0] eq 'on') {
+    set_enabled('true');
+}
+elsif ($ARGV[0] eq 'off') {
+    set_enabled('false');
+}
+elsif ($ARGV[0] eq 'toggle') {
+    my $val = get_enabled();
+    if ($val eq 'false') {
+        set_enabled('true');
+    }
+    elsif ($val eq 'true') {
+        set_enabled('false');
+    }
+    else {
+        die "$0: Unrecognized value for night-light-enabled key: $val\n"
+    }
+}
+elsif ($ARGV[0] =~ /^([+-]?)([0-9]{1,4})$/) {
+    my ($sign, $target) = ($1, 0+$2);
+    my $temp =
+        $sign eq '+' ? get_temp() + $target
+      : $sign eq '-' ? get_temp() - $target
+      : $target;
+    my ($min, $max) = (1700, 4700);
+    if ($temp < $min) { $temp = $min; }
+    if ($temp > $max) { $temp = $max; }
+    set_temp($temp);
+}
+else {
+    die "$0: Invalid argument.  See script for details.\n";
+}
+

@@ -1,10 +1,8 @@
-*
+/*
 !/.gitignore
 !/README
 !/.conkyrc
 !/.vimrc
-!/.mplayer
-/.mplayer/*
 !/.mplayer/config
 !/.loginrc
 !/.Xmodmap
@@ -13,8 +11,5 @@
 !/.vim
 !/.vim/**
 !/bin
-/bin/**
-!/bin/vimdow
-~/bin/burn
 !/windows
 !/windows/**

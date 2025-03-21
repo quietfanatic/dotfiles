@@ -1,0 +1,6 @@
+#!/bin/bash
+pushd $1
+shift
+"$@"
+popd
+
