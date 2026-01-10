@@ -104,7 +104,7 @@ autocmd BufEnter *.js set syntax=myjs
 autocmd BufEnter *.hs set syntax=myhs
 autocmd BufEnter *.ohs set syntax=myhs
 autocmd BufEnter *.hacc set syntax=hacc
-autocmd BufEnter *.s set syntax=myrvs
+autocmd BufEnter *.s set syntax=myx64
 autocmd FileType perl set syntax=myperl
 autocmd FileType perl6 set syntax=myperl6
 "autocmd BufEnter *
